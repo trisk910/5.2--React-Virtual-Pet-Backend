@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>cat.itacademy.s05.t02</groupId>
-	<artifactId>VirtualPet</artifactId>
+	<artifactId>VirtualPetBackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>S05T02</name>
 	<description>Aplicació Web Mascota Virtual</description>
@@ -79,6 +79,16 @@
 			<groupId>io.swagger.core.v3</groupId>
 			<artifactId>swagger-annotations</artifactId>
 			<version>2.2.22</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version>
 		</dependency>
 	</dependencies>
 

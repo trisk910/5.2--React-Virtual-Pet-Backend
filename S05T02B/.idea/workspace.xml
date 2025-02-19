@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8659a38b-bd56-49ae-98a0-ec25d7b0a195" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../S05T02/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Config/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Exceptions/DeckEmptyException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Exceptions/GameNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Exceptions/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Exceptions/PlayerNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Exceptions/ResourceNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Models/Enums/UserType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Models/Pet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Models/SuperUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/Models/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/java/cat/itacademy/s05/t02/S05T02/S05T02Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../S05T02/src/test/java/cat/itacademy/s05/t02/S05T02/S05T02ApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;trisk910&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/trisk910/5.2--React-Virtual-Pet.git&quot;,
+    &quot;accountId&quot;: &quot;f943912f-736f-4efb-b24c-8912779d94d6&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2tD7OhxpM80CQTTto6btw5HR5Lp" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/It Academy/Exercicis/Sprint5/5.2--React-Virtual-Pet/virtual-pet-backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\It Academy\Exercicis\Sprint5\5.2--React-Virtual-Pet\S05T02\src\main\java\cat\itacademy\s05\t02\S05T02" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="VirtualPetBackend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="VirtualPetBackend" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="S05T02Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="VirtualPetBackend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cat.itacademy.s05.t02.S05T02.S05T02Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8659a38b-bd56-49ae-98a0-ec25d7b0a195" name="Changes" comment="" />
+      <created>1739874761432</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739874761432</updated>
+      <workItem from="1739874762567" duration="1854000" />
+      <workItem from="1739957762495" duration="1647000" />
+      <workItem from="1739959581857" duration="544000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

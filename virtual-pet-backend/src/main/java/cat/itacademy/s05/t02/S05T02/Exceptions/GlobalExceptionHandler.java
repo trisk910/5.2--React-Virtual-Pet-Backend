@@ -17,10 +17,6 @@ public class GlobalExceptionHandler {
         return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
     }
 
-    @ExceptionHandler(GameNotFoundException.class)
-    public Mono<ResponseEntity<String>> handleGameNotFound(GameNotFoundException e){
-        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
-    }
     @ExceptionHandler(IllegalArgumentException.class)
     public Mono<ResponseEntity<String>> handleIllegalArgument(IllegalArgumentException e){
         return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage()));
@@ -42,10 +38,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
-    @ExceptionHandler(DeckEmptyException.class)
-    public Mono<ResponseEntity<String>> handleEmptyCardDeckException(DeckEmptyException e){
-        return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage()));
-    }
     @ExceptionHandler(ResourceNotFoundException.class)
     public Mono<ResponseEntity<String>>handleResourceNotFoundException(ResourceNotFoundException ex) {
         return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage()));
