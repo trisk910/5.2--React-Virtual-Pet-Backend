@@ -14,10 +14,10 @@ public class SwaggerConfig {
     public OpenAPI defineOpenApi() {
         Server server = new Server();
         server.setUrl("http://localhost:8080");
-        server.setDescription("Blackjack");
+        server.setDescription("Virtual Pet API");
         Info information = new Info()
-                .title("Blackjack")
-                .version("2.0")
+                .title("Virtual Pet")
+                .version("1.0")
                 .description("This API exposes endpoints to manage a blackjack game.");
         return new OpenAPI().info(information).servers(List.of(server));
     }
