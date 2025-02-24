@@ -19,11 +19,12 @@ public class User {
 
     private List<Pet> pets;
 
-    public User(String name, String username, String email, String password) {
+    public User(String name, String username, String email, String password, RoleType roleType) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.roleType = roleType;
     }
 
     public String getName() {

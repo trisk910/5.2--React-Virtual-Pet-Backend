@@ -17,9 +17,9 @@ public class Pet {
     private int defense;
     private int speed;
     private int happiness;
-    private Long userId;
+    private String userId;
 
-    public Pet(String name, PetType type, Long userId) {
+    public Pet(String name, PetType type, String userId) {
         this.name = name;
         this.type = type;
         setStats(type);
@@ -27,11 +27,11 @@ public class Pet {
         this.userId = userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
