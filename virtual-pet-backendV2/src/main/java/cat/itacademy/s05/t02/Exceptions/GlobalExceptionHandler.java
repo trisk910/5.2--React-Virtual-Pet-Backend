@@ -12,8 +12,18 @@ import java.util.HashMap;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(PlayerNotFoundException.class)
-    public Mono<ResponseEntity<String>> handlePlayerNotFound(PlayerNotFoundException e){
+    @ExceptionHandler(UserNotFoundException.class)
+    public Mono<ResponseEntity<String>> handleUserNotFound(UserNotFoundException e){
+        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
+    }
+
+    @ExceptionHandler(PetNotFoundException.class)
+    public Mono<ResponseEntity<String>> handlePetNotFound(UserNotFoundException e){
+        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
+    }
+
+    @ExceptionHandler(FightNotFoundException.class)
+    public Mono<ResponseEntity<String>> handleFightNotFound(FightNotFoundException e){
         return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
     }
 
@@ -42,5 +52,7 @@ public class GlobalExceptionHandler {
     public Mono<ResponseEntity<String>>handleResourceNotFoundException(ResourceNotFoundException ex) {
         return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage()));
     }
+
+
 
 }

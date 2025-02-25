@@ -3,6 +3,8 @@ package cat.itacademy.s05.t02.Controllers;
 import cat.itacademy.s05.t02.Models.Enums.RoleType;
 import cat.itacademy.s05.t02.Models.User;
 import cat.itacademy.s05.t02.service.UserService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,11 @@ public class UserAuthController {
     private UserService userService;
 
     @PostMapping("/register")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User registered successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "409", description = "Username already exists")
+    })
     public Mono<String> registerUser(
             @RequestParam String name,
             @RequestParam String username,
@@ -33,6 +40,10 @@ public class UserAuthController {
     }
 
     @PostMapping("/login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login successful"),
+            @ApiResponse(responseCode = "401", description = "Login failed")
+    })
     public Mono<String> loginUser(@RequestParam String username, @RequestParam String password) {
         return userService.loginUser(username, password)
                 .doOnSuccess(result -> {
