@@ -1,10 +1,12 @@
 package cat.itacademy.s05.t02.Config;
 
 import cat.itacademy.s05.t02.Security.JwtAuthenticationFilter;
+import cat.itacademy.s05.t02.repository.UserRepository;
 import cat.itacademy.s05.t02.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,12 +14,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import reactor.core.publisher.Mono;
 
 
 import java.util.List;
@@ -26,11 +30,13 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    public SecurityConfig(UserService userService, @Lazy JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.userService = userService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -46,15 +52,17 @@ public class SecurityConfig {
                     config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
                     config.setAllowCredentials(true);
                     return config;
-                }))
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/**", "/test/", "/v3/api-docs/**", "/swagger-ui/**",
-                                "/swagger-ui.html", "/webjars/**", "/swagger-ui/index.html",
-                                "/swagger-ui/webjars/swagger-ui/index.html")
-                        .permitAll()
-                        .requestMatchers("/pet/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/pet/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().denyAll())
+                })).authorizeHttpRequests(request -> request
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/",
+                                "/webjars/**",
+                                "/auth/**"
+                        ).permitAll()
+                        .requestMatchers("/pets/**").authenticated()
+                        .requestMatchers("/fights/**").authenticated()
+                        .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(provider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -73,5 +81,18 @@ public class SecurityConfig {
         provider.setPasswordEncoder(passwordEncoder);
         return new ProviderManager(provider);
     }
+
+    @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return username -> userRepository.findByUsername(username)
+                .map(user -> org.springframework.security.core.userdetails.User
+                        .withUsername(user.getUsername())
+                        .password(user.getPassword())
+                        .authorities("ROLE_USER")
+                        .build())
+                .switchIfEmpty(Mono.error(new UsernameNotFoundException("Usuari no trobat")))
+                .block();
+    }
+
 
 }
