@@ -58,10 +58,12 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-resources/",
                                 "/webjars/**",
-                                "/auth/**"
+                                "/auth/**",
+                                "/register/**",
+                                "/login/**"
                         ).permitAll()
-                        .requestMatchers("/pets/**").authenticated()
-                        .requestMatchers("/fights/**").authenticated()
+                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/user/**").hasAnyAuthority("USER")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(provider)
@@ -88,11 +90,9 @@ public class SecurityConfig {
                 .map(user -> org.springframework.security.core.userdetails.User
                         .withUsername(user.getUsername())
                         .password(user.getPassword())
-                        .authorities("ROLE_USER")
+                        .authorities("ROLE_ADMIN")
                         .build())
-                .switchIfEmpty(Mono.error(new UsernameNotFoundException("Usuari no trobat")))
+                .switchIfEmpty(Mono.error(new UsernameNotFoundException("User not found")))
                 .block();
     }
-
-
 }
