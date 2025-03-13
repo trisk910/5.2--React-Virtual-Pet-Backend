@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoboDTO {
-    private String id;
+    private Long id;
     private String name;
     private RoboType type;
-    private String userId;
+    private Long userId;
 }

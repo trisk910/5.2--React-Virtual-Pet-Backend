@@ -14,8 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/robos")
@@ -32,10 +33,11 @@ public class RoboController {
             @ApiResponse(responseCode = "200", description = "Robo created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
-    public Mono<RoboDTO> buildRobo(@RequestBody CreateRoboDTO createRoboDTO) {
+    public ResponseEntity<RoboDTO> buildRobo(@RequestBody CreateRoboDTO createRoboDTO) {
         Robo robo = new Robo(createRoboDTO.getName(), createRoboDTO.getType(), createRoboDTO.getUserId());
-        return roboService.buildRobo(robo)
-                .map(savedRobo -> new RoboDTO(savedRobo.getId(), savedRobo.getName(), savedRobo.getType(), savedRobo.getUserId()));
+        Robo savedRobo = roboService.buildRobo(robo);
+        RoboDTO roboDTO = new RoboDTO(savedRobo.getId(), savedRobo.getName(), savedRobo.getType(), savedRobo.getUserId());
+        return ResponseEntity.ok(roboDTO);
     }
 
     @DeleteMapping("/destroy/{id}")
@@ -44,15 +46,14 @@ public class RoboController {
             @ApiResponse(responseCode = "200", description = "Robo deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Robo not found")
     })
-    public Mono<ResponseEntity<String>> destroyRobo(@PathVariable String id) {
-        return roboService.getRoboById(id)
-                .switchIfEmpty(Mono.error(new RoboNotFoundException(id)))
-                .flatMap(existingRobo -> roboService.destroyRobo(id)
-                        .then(Mono.just(ResponseEntity.ok("Robo deleted successfully"))))
-                .onErrorResume(RoboNotFoundException.class, e -> {
-                    logger.error("Robo not found: " + e.getMessage());
-                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
-                });
+    public ResponseEntity<String> destroyRobo(@PathVariable Long id) {
+        Robo existingRobo = roboService.getRoboById(id);
+        if (existingRobo == null) {
+            logger.error("Robo not found: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Robo not found");
+        }
+        roboService.destroyRobo(id);
+        return ResponseEntity.ok("Robo deleted successfully");
     }
 
     @GetMapping("/all")
@@ -60,9 +61,12 @@ public class RoboController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Robos retrieved successfully")
     })
-    public Flux<RoboDTO> getAllRobos() {
-        return roboService.getAllRobos()
-                .map(robo -> new RoboDTO(robo.getId(), robo.getName(), robo.getType(), robo.getUserId()));
+    public ResponseEntity<List<RoboDTO>> getAllRobos() {
+        List<Robo> robos = roboService.getAllRobos();
+        List<RoboDTO> roboDTOs = robos.stream()
+                .map(robo -> new RoboDTO(robo.getId(), robo.getName(), robo.getType(), robo.getUserId()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(roboDTOs);
     }
 
     @PutMapping("/update")
@@ -71,18 +75,15 @@ public class RoboController {
             @ApiResponse(responseCode = "200", description = "Robo updated successfully"),
             @ApiResponse(responseCode = "404", description = "Robo not found")
     })
-    public Mono<ResponseEntity<RoboDTO>> updateRobo(@RequestParam String id, @RequestParam String name) {
-        return roboService.getRoboById(id)
-                .switchIfEmpty(Mono.error(new RoboNotFoundException(id)))
-                .flatMap(existingRobo -> {
-                    existingRobo.setName(name);
-                    return roboService.updateRobo(existingRobo)
-                            .map(updatedRobo -> new RoboDTO(updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(), updatedRobo.getUserId()))
-                            .map(roboDTO -> ResponseEntity.ok(roboDTO));
-                })
-                .onErrorResume(RoboNotFoundException.class, e -> {
-                    logger.error("Robo not found: " + e.getMessage());
-                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
-                });
+    public ResponseEntity<RoboDTO> updateRobo(@RequestParam Long id, @RequestParam String name) {
+        Robo existingRobo = roboService.getRoboById(id);
+        if (existingRobo == null) {
+            logger.error("Robo not found: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        existingRobo.setName(name);
+        Robo updatedRobo = roboService.updateRobo(existingRobo);
+        RoboDTO roboDTO = new RoboDTO(updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(), updatedRobo.getUserId());
+        return ResponseEntity.ok(roboDTO);
     }
 }

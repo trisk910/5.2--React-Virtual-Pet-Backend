@@ -1,6 +1,4 @@
-package cat.itacademy.s05.t02.Service;
-
-import cat.itacademy.s05.t02.Models.Robo;
+package cat.itacademy.s05.t02.Models;
 
 import java.util.Random;
 

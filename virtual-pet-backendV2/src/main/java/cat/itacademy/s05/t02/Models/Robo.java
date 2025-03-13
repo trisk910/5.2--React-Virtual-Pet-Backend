@@ -2,24 +2,27 @@ package cat.itacademy.s05.t02.Models;
 
 import cat.itacademy.s05.t02.Exceptions.RoboTypeNotFoundException;
 import cat.itacademy.s05.t02.Models.Enums.RoboType;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
 
 import java.util.Random;
-@Document(collection = "Robos")
+
+@Entity
+@Table(name = "Robos")
 public class Robo {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private RoboType type;
     private int health;
     private int attack;
     private int defense;
     private int speed;
     private int happiness;
-    private String userId;
+    private Long userId;
 
-    public Robo(String name, RoboType type, String userId) {
+    public Robo(String name, RoboType type, Long userId) {
         this.name = name;
         this.type = type;
         setStats(type);
@@ -27,19 +30,22 @@ public class Robo {
         this.userId = userId;
     }
 
-    public void setUserId(String userId) {
+    public Robo() {
+    }
+
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -103,24 +109,25 @@ public class Robo {
         Random random = new Random();
         switch (roboType) {
             case melee:
-                this.health = 50 + random.nextInt(51); // 50 to 100
-                this.attack = 70 + random.nextInt(31); // 70 to 100
-                this.defense = 30 + random.nextInt(21); // 30 to 50
-                this.speed = 85 + random.nextInt(16); // 85 to 100
+                this.health = 50 + random.nextInt(51);
+                this.attack = 70 + random.nextInt(31);
+                this.defense = 30 + random.nextInt(21);
+                this.speed = 85 + random.nextInt(16);
                 break;
             case ranged:
-                this.health = 60 + random.nextInt(41); // 60 to 100
-                this.attack = 60 + random.nextInt(41); // 60 to 100
-                this.defense = 40 + random.nextInt(21); // 40 to 60
-                this.speed = 60 + random.nextInt(41); // 60 to 100
+                this.health = 60 + random.nextInt(41);
+                this.attack = 60 + random.nextInt(41);
+                this.defense = 40 + random.nextInt(21);
+                this.speed = 60 + random.nextInt(41);
                 break;
             case tank:
-                this.health = 100 + random.nextInt(51); // 100 to 150
-                this.attack = 50 + random.nextInt(31); // 50 to 80
-                this.defense = 70 + random.nextInt(31); // 70 to 100
-                this.speed = 30 + random.nextInt(21); // 30 to 50
+                this.health = 100 + random.nextInt(51);
+                this.attack = 50 + random.nextInt(31);
+                this.defense = 70 + random.nextInt(31);
+                this.speed = 30 + random.nextInt(21);
                 break;
-            default: throw new RoboTypeNotFoundException("Invalid pet type: " + roboType);
+            default:
+                throw new RoboTypeNotFoundException("Invalid pet type: " + roboType);
         }
     }
 }

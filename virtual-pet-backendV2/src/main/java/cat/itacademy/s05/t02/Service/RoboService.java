@@ -1,14 +1,12 @@
 package cat.itacademy.s05.t02.Service;
 
-
 import cat.itacademy.s05.t02.Models.Robo;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import java.util.List;
 
 public interface RoboService {
-    Mono<Robo> buildRobo(Robo robo);
-    Mono<Void> destroyRobo(String id);
-    Flux<Robo> getAllRobos();
-    Mono<Robo> getRoboById(String id);
-    Mono<Robo> updateRobo(Robo robo);
+    Robo buildRobo(Robo robo);
+    void destroyRobo(Long id);
+    List<Robo> getAllRobos();
+    Robo getRoboById(Long id);
+    Robo updateRobo(Robo robo);
 }

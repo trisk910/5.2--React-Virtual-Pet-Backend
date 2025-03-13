@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FightDTO {
-    private String id;
+    private Long id;
     private String robo1Name;
     private String robo2Name;
     private String winner;

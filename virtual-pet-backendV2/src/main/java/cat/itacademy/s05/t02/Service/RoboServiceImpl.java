@@ -1,45 +1,40 @@
 package cat.itacademy.s05.t02.Service;
 
+        import cat.itacademy.s05.t02.Models.Robo;
+        import cat.itacademy.s05.t02.Repository.RoboRepository;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.stereotype.Service;
 
-import cat.itacademy.s05.t02.Models.Robo;
-import cat.itacademy.s05.t02.Repository.PetRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+        import java.util.List;
 
-@Service
-public class RoboServiceImpl implements RoboService {
+        @Service
+        public class RoboServiceImpl implements RoboService {
 
-    @Autowired
-    private PetRepository petRepository;
+            @Autowired
+            private RoboRepository roboRepository;
 
-    @Override
-    public Mono<Robo> buildRobo(Robo robo) {
-        return petRepository.save(robo);
-    }
+            @Override
+            public Robo buildRobo(Robo robo) {
+                return roboRepository.save(robo);
+            }
 
-    @Override
-    public Mono<Void> destroyRobo(String id) {
-        return petRepository.deleteById(id);
-    }
+            @Override
+            public void destroyRobo(Long id) {
+                roboRepository.deleteById(id);
+            }
 
-    @Override
-    public Flux<Robo> getAllRobos() {
-        return petRepository.findAll();
-    }
+            @Override
+            public List<Robo> getAllRobos() {
+                return roboRepository.findAll();
+            }
 
-    @Override
-    public Mono<Robo> getRoboById(String id) {
-        return petRepository.findById(id);
-    }
+            @Override
+            public Robo getRoboById(Long id) {
+                return roboRepository.findById(id).orElse(null);
+            }
 
-    @Override
-    public Mono<Robo> updateRobo(Robo robo) {
-        return petRepository.findById(robo.getId())
-                .flatMap(existingPet -> {
-                    existingPet.setName(robo.getName());
-                    return petRepository.save(existingPet);
-                });
-    }
-}
+            @Override
+            public Robo updateRobo(Robo robo) {
+                return roboRepository.save(robo);
+            }
+        }

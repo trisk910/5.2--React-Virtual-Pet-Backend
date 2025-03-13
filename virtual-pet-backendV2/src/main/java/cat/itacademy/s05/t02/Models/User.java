@@ -1,23 +1,33 @@
 package cat.itacademy.s05.t02.Models;
 
-
 import cat.itacademy.s05.t02.Models.Enums.RoleType;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-@Document(collection = "User")
+@Entity
+@Table(name = "User")
 public class User {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "username")
     private String username;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "RoleType")
     private RoleType roleType;
 
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Robo> robos;
+
+    public User() {
+    }
 
     public User(String name, String username, String email, String password, RoleType roleType) {
         this.name = name;
@@ -25,6 +35,14 @@ public class User {
         this.email = email;
         this.password = password;
         this.roleType = roleType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -58,21 +76,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
     public RoleType getRoleType() {
         return roleType;
     }
 
     public void setRoleType(RoleType roleType) {
         this.roleType = roleType;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public List<Robo> getRobos() {

@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class CreateRoboDTO {
     private String name;
     private RoboType type;
-    private String userId;
+    private Long userId;
 }

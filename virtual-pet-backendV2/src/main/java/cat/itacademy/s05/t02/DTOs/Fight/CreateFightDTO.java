@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateFightDTO {
-    private String robo1Id;
-    private String robo2Id;
+    private Long robo1Id;
+    private Long robo2Id;
 }

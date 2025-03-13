@@ -19,6 +19,15 @@ public class SwaggerConfig {
                 .title("Robofighters API")
                 .version("1.0")
                 .description("This API exposes endpoints to manage a Virtual Pet game.");
-        return new OpenAPI().info(information).servers(List.of(server));
+        return new OpenAPI().info(information).servers(List.of(server))
+                .addSecurityItem(new io.swagger.v3.oas.models.security.SecurityRequirement()
+                        .addList("bearerAuth"))
+                .components(new io.swagger.v3.oas.models.Components()
+                        .addSecuritySchemes("bearerAuth",
+                                new io.swagger.v3.oas.models.security.SecurityScheme()
+                                        .name("bearerAuth")
+                                        .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
     }
 }
