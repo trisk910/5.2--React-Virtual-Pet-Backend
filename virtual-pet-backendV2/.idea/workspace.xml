@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="de4dfce0-7aeb-499b-b9c7-bac10c34a9b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Config/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Controllers/FightController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Controllers/RoboController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Controllers/UserAuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOS/UserDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOS/UserLoginDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOS/UserRegisterDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOs/Fight/CreateFightDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOs/Fight/FightDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOs/Robo/CreateRoboDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOs/Robo/RoboDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOs/User/CreateUserDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOs/User/UserDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOs/User/UserRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/DTOs/User/UserResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Exceptions/AuthenticationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Exceptions/FightNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Exceptions/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Exceptions/ResourceNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Exceptions/RoboNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Exceptions/RoboTypeNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Exceptions/UserAlreadyExistsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Exceptions/UserNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Models/Enums/RoboType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Models/Enums/RoleType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Models/Fight.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Models/FightSimulator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Models/Robo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Models/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Repository/FightRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Repository/RoboRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/RobofightersApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Security/JwtAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Security/JwtRequestFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Security/JwtTokenUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Security/JwtUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Security/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Security/WebSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Service/RoboService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Service/RoboServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/itacademy/s05/t02/Service/UserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cat/itacademy/s05/t01/n01/Controllers/PlayerControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cat/itacademy/s05/t01/n01/RobofightersApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cat/itacademy/s05/t01/n01/service/PlayerServiceImplTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Exception" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="JWT" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;trisk910&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/trisk910/5.2--React-Virtual-Pet.git&quot;,
+    &quot;accountId&quot;: &quot;1c9ed582-5a7a-4e36-9c60-bbcc20b0c3d5&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2uEBES4GGbJSkMpPjAZOF5f0UrA" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.S05T02 [clean,package].executor": "Run",
+    "Maven.S05T02 [clean...].executor": "Run",
+    "Maven.S05T02 [clean].executor": "Run",
+    "Maven.S05T02 [compile].executor": "Run",
+    "Maven.S05T02 [package].executor": "Run",
+    "Notification.DisplayName-DoNotAsk-Database detector": "Database detector",
+    "Notification.DoNotAsk-Database detector": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.RobofighterApplication.executor": "Run",
+    "Spring Boot.RobofightersApplication.executor": "Run",
+    "Spring Boot.S05T02Application.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "F:/IT Academy/VirtualPet/5.2--React-Virtual-Pet/virtual-pet-backendV3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "spring",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\IT Academy\VirtualPet\5.2--React-Virtual-Pet\virtual-pet-backendV2\src\main\java\cat\itacademy\s05\t02\DTOs\User" />
+      <recent name="F:\IT Academy\VirtualPet\5.2--React-Virtual-Pet\virtual-pet-backendV2\src\main\java\cat\itacademy\s05\t02\Config" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cat.itacademy.s05.t02.Controllers" />
+      <recent name="cat.itacademy.s05.t02.Service" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn package" />
+      <command value="mvn clean dependency:purge-local-repository package" />
+      <command value="mvn compile" />
+      <command value="mvn clean package" />
+      <command value="mvn clean" />
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.RobofightersApplication">
+    <configuration name="RobofighterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="S05T02" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cat.itacademy.s05.t02.RobofighterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RobofightersApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="S05T02" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cat.itacademy.s05.t02.RobofightersApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="S05T02Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="S05T02" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cat.itacademy.s05.t02.S05T02Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="de4dfce0-7aeb-499b-b9c7-bac10c34a9b0" name="Changes" comment="" />
+      <created>1741803741411</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741803741411</updated>
+      <workItem from="1741803742575" duration="191000" />
+      <workItem from="1741804060827" duration="9244000" />
+      <workItem from="1741875818493" duration="9053000" />
+      <workItem from="1741886883285" duration="16356000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
