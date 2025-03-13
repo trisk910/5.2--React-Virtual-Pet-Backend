@@ -50,7 +50,7 @@ public class RoboController {
         Robo existingRobo = roboService.getRoboById(id);
         if (existingRobo == null) {
             logger.error("Robo not found: " + id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Robo not found");
+            throw new RoboNotFoundException("Robo not found with id: " + id);
         }
         roboService.destroyRobo(id);
         return ResponseEntity.ok("Robo deleted successfully");
@@ -79,7 +79,7 @@ public class RoboController {
         Robo existingRobo = roboService.getRoboById(id);
         if (existingRobo == null) {
             logger.error("Robo not found: " + id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            throw new RoboNotFoundException("Robo not found with id: " + id);
         }
         existingRobo.setName(name);
         Robo updatedRobo = roboService.updateRobo(existingRobo);

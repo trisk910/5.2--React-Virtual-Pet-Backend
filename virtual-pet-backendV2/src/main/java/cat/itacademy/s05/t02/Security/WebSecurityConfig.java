@@ -1,4 +1,4 @@
-package cat.itacademy.s05.t02.Config;
+package cat.itacademy.s05.t02.Security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,7 @@ public class WebSecurityConfig {
 	private static final String[] WHITE_LIST_URL = { "/api/v1/auth/**", "/v2/api-docs", "/v3/api-docs",
 			"/v3/api-docs/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
 			"/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html", "/api/auth/**",
-			"/api/test/**", "/authenticate" };
+			"/api/test/**", "/authenticate", "/auth/**" };
 
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
@@ -42,4 +42,6 @@ public class WebSecurityConfig {
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
+
+
 }

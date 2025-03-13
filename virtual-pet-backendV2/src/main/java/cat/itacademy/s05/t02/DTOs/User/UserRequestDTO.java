@@ -2,20 +2,18 @@ package cat.itacademy.s05.t02.DTOs.User;
 
 import java.io.Serializable;
 
-public class JwtRequest implements Serializable {
+public class UserRequestDTO implements Serializable {
 
 	private static final long serialVersionUID = 5926468583005150707L;
 	
 	private String username;
 	private String password;
-	
-	//need default constructor for JSON Parsing
-	public JwtRequest()
+
+	public UserRequestDTO()
 	{
-		
 	}
 
-	public JwtRequest(String username, String password) {
+	public UserRequestDTO(String username, String password) {
 		this.setUsername(username);
 		this.setPassword(password);
 	}

@@ -41,16 +41,14 @@ public class FightController {
             @ApiResponse(responseCode = "404", description = "Robo not found")
     })
     public ResponseEntity<FightDTO> simulateFight(@RequestBody CreateFightDTO createFightDTO) {
-        Optional<Robo> robo1Opt = Optional.ofNullable(roboService.getRoboById(createFightDTO.getRobo1Id()));
-        Optional<Robo> robo2Opt = Optional.ofNullable(roboService.getRoboById(createFightDTO.getRobo2Id()));
+        Robo robo1 = roboService.getRoboById(createFightDTO.getRobo1Id());
+        Robo robo2 = roboService.getRoboById(createFightDTO.getRobo2Id());
 
-        if (robo1Opt.isEmpty() || robo2Opt.isEmpty()) {
+        if (robo1 == null || robo2 == null) {
             logger.error("Robo not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            throw new RoboNotFoundException("Robo not found");
         }
 
-        Robo robo1 = robo1Opt.get();
-        Robo robo2 = robo2Opt.get();
         String winner = fightSimulator.determineWinner(robo1, robo2);
         logger.info("Winner: " + winner);
         Fight fight = new Fight(robo1.getName(), robo2.getName(), winner);
@@ -69,7 +67,7 @@ public class FightController {
         Optional<Fight> fightOpt = fightRepository.findById(id);
         if (fightOpt.isEmpty()) {
             logger.error("Fight not found: " + id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new FightNotFoundException("Fight not found with id: " + id);
         }
         fightRepository.delete(fightOpt.get());
         return ResponseEntity.ok().build();

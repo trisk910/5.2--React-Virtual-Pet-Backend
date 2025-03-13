@@ -1,4 +1,4 @@
-package cat.itacademy.s05.t02.Config;
+package cat.itacademy.s05.t02.Security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
