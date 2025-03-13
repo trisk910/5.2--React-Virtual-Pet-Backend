@@ -1,17 +1,17 @@
 package cat.itacademy.s05.t02.Models;
 
-import cat.itacademy.s05.t02.Exceptions.PetTypeNotFoundException;
-import cat.itacademy.s05.t02.Models.Enums.PetType;
+import cat.itacademy.s05.t02.Exceptions.RoboTypeNotFoundException;
+import cat.itacademy.s05.t02.Models.Enums.RoboType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Random;
-@Document(collection = "Pet")
-public class Pet {
+@Document(collection = "Robos")
+public class Robo {
     @Id
     private String id;
     private String name;
-    private PetType type;
+    private RoboType type;
     private int health;
     private int attack;
     private int defense;
@@ -19,7 +19,7 @@ public class Pet {
     private int happiness;
     private String userId;
 
-    public Pet(String name, PetType type, String userId) {
+    public Robo(String name, RoboType type, String userId) {
         this.name = name;
         this.type = type;
         setStats(type);
@@ -51,11 +51,11 @@ public class Pet {
         this.name = name;
     }
 
-    public PetType getType() {
+    public RoboType getType() {
         return type;
     }
 
-    public void setType(PetType type) {
+    public void setType(RoboType type) {
         this.type = type;
     }
 
@@ -99,9 +99,9 @@ public class Pet {
         this.happiness = happiness;
     }
 
-    private void setStats(PetType petType) {
+    private void setStats(RoboType roboType) {
         Random random = new Random();
-        switch (petType) {
+        switch (roboType) {
             case melee:
                 this.health = 50 + random.nextInt(51); // 50 to 100
                 this.attack = 70 + random.nextInt(31); // 70 to 100
@@ -120,7 +120,7 @@ public class Pet {
                 this.defense = 70 + random.nextInt(31); // 70 to 100
                 this.speed = 30 + random.nextInt(21); // 30 to 50
                 break;
-            default: throw new PetTypeNotFoundException("Invalid pet type: " + petType);
+            default: throw new RoboTypeNotFoundException("Invalid pet type: " + roboType);
         }
     }
 }

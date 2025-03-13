@@ -7,15 +7,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Fight {
     @Id
     private String id;
-    private String pet1Name;
-    private String pet2Name;
+    private String robo1Name;
+    private String robo2Name;
     private String winner;
 
     public Fight() {}
 
-    public Fight(String pet1Name, String pet2Name, String winner) {
-        this.pet1Name = pet1Name;
-        this.pet2Name = pet2Name;
+    public Fight(String robo1Name, String robo2Name, String winner) {
+        this.robo1Name = robo1Name;
+        this.robo2Name = robo2Name;
         this.winner = winner;
     }
 
@@ -27,20 +27,20 @@ public class Fight {
         this.id = id;
     }
 
-    public String getPet1Name() {
-        return pet1Name;
+    public String getRobo1Name() {
+        return robo1Name;
     }
 
-    public void setPet1Name(String pet1Name) {
-        this.pet1Name = pet1Name;
+    public void setRobo1Name(String robo1Name) {
+        this.robo1Name = robo1Name;
     }
 
-    public String getPet2Name() {
-        return pet2Name;
+    public String getRobo2Name() {
+        return robo2Name;
     }
 
-    public void setPet2Name(String pet2Name) {
-        this.pet2Name = pet2Name;
+    public void setRobo2Name(String robo2Name) {
+        this.robo2Name = robo2Name;
     }
 
     public String getWinner() {

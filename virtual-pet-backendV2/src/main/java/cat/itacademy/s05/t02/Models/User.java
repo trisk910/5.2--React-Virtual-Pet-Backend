@@ -17,7 +17,7 @@ public class User {
     private String password;
     private RoleType roleType;
 
-    private List<Pet> pets;
+    private List<Robo> robos;
 
     public User(String name, String username, String email, String password, RoleType roleType) {
         this.name = name;
@@ -75,11 +75,11 @@ public class User {
         this.id = id;
     }
 
-    public List<Pet> getPets() {
-        return pets;
+    public List<Robo> getRobos() {
+        return robos;
     }
 
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
+    public void setRobos(List<Robo> robos) {
+        this.robos = robos;
     }
 }

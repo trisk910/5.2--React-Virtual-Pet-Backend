@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
         return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
     }
 
-    @ExceptionHandler(PetNotFoundException.class)
+    @ExceptionHandler(RoboNotFoundException.class)
     public Mono<ResponseEntity<String>> handlePetNotFound(UserNotFoundException e){
         return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
     }

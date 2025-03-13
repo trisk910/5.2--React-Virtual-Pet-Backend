@@ -1,5 +1,7 @@
 package cat.itacademy.s05.t02.Controllers;
 
+import cat.itacademy.s05.t02.DTOs.CreateUserDTO;
+import cat.itacademy.s05.t02.DTOs.UserDTO;
 import cat.itacademy.s05.t02.Models.Enums.RoleType;
 import cat.itacademy.s05.t02.Models.User;
 import cat.itacademy.s05.t02.service.UserService;
@@ -24,18 +26,13 @@ public class UserAuthController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "409", description = "Username already exists")
     })
-    public Mono<String> registerUser(
-            @RequestParam String name,
-            @RequestParam String username,
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam(defaultValue = "ROLE_USER") String roleType) {
-        return userService.findByUsername(username)
+    public Mono<String> registerUser(@RequestBody CreateUserDTO createUserDTO) {
+        return userService.findByUsername(createUserDTO.getUsername())
                 .flatMap(existingUser -> {
-                    logger.info("Username already exists: " + username);
+                    logger.info("Username already exists: " + createUserDTO.getUsername());
                     return Mono.just("Username already exists");
                 })
-                .switchIfEmpty(userService.registerUser(new User(name, username, email, password, RoleType.valueOf(roleType)))
+                .switchIfEmpty(userService.registerUser(new User(createUserDTO.getName(), createUserDTO.getUsername(), createUserDTO.getEmail(), createUserDTO.getPassword(), createUserDTO.getRoleType()))
                         .thenReturn("User registered successfully"));
     }
 
