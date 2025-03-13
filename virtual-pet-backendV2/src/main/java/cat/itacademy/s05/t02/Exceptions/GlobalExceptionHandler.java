@@ -6,35 +6,34 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
-    public Mono<ResponseEntity<String>> handleUserNotFound(UserNotFoundException e){
-        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
+    public ResponseEntity<String> handleUserNotFound(UserNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
-    @ExceptionHandler(PetNotFoundException.class)
-    public Mono<ResponseEntity<String>> handlePetNotFound(UserNotFoundException e){
-        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
+    @ExceptionHandler(RoboNotFoundException.class)
+    public ResponseEntity<String> handleRoboNotFound(RoboNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(FightNotFoundException.class)
-    public Mono<ResponseEntity<String>> handleFightNotFound(FightNotFoundException e){
-        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()));
+    public ResponseEntity<String> handleFightNotFound(FightNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public Mono<ResponseEntity<String>> handleIllegalArgument(IllegalArgumentException e){
-        return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage()));
+    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public Mono<ResponseEntity<String>> handleIllegalStateException(IllegalStateException e){
-        return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()));
+    public ResponseEntity<String> handleIllegalStateException(IllegalStateException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
@@ -49,10 +48,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public Mono<ResponseEntity<String>>handleResourceNotFoundException(ResourceNotFoundException ex) {
-        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage()));
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
-
-
-
 }

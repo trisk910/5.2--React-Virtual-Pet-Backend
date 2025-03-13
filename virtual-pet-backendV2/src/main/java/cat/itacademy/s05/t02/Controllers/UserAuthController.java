@@ -1,28 +1,25 @@
 package cat.itacademy.s05.t02.Controllers;
 
-import cat.itacademy.s05.t02.DTOS.UserLoginDTO;
-import cat.itacademy.s05.t02.DTOS.UserRegisterDTO;
-import cat.itacademy.s05.t02.Models.Enums.RoleType;
+import cat.itacademy.s05.t02.Security.JwtTokenUtil;
+import cat.itacademy.s05.t02.DTOs.User.CreateUserDTO;
+import cat.itacademy.s05.t02.DTOs.User.UserRequestDTO;
+import cat.itacademy.s05.t02.DTOs.User.UserResponseDTO;
+import cat.itacademy.s05.t02.Exceptions.UserAlreadyExistsException;
+import cat.itacademy.s05.t02.Exceptions.UserNotFoundException;
 import cat.itacademy.s05.t02.Models.User;
-import cat.itacademy.s05.t02.Security.JwtUtil;
-import cat.itacademy.s05.t02.service.UserService;
+import cat.itacademy.s05.t02.Service.UserService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/auth")
 public class UserAuthController {
     private static final Logger logger = LogManager.getLogger(UserAuthController.class);
@@ -31,13 +28,10 @@ public class UserAuthController {
     private UserService userService;
 
     @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @PostMapping("/register")
     @ApiResponses(value = {
@@ -45,52 +39,26 @@ public class UserAuthController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "409", description = "Username already exists")
     })
-    public Mono<UserRegisterDTO> registerUser(@RequestBody UserRegisterDTO userRegisterDTO) {
-        return userService.findByUsername(userRegisterDTO.getUsername())
-                .flatMap(existingUser -> {
-                    logger.error("Username already exists: " + userRegisterDTO.getUsername());
-                    return Mono.<UserRegisterDTO>error(new RuntimeException("Username already exists"));
-                })
-                .switchIfEmpty(userService.registerUser(new User(
-                                userRegisterDTO.getName(),
-                                userRegisterDTO.getUsername(),
-                                userRegisterDTO.getEmail(),
-                                userRegisterDTO.getPassword(),
-                                RoleType.valueOf(userRegisterDTO.getRoleType())))
-                        .flatMap(user -> {
-                            String jwt = jwtUtil.generateToken(user.getUsername(), List.of("ROLE_" + user.getRoleType().name()));
-                            userRegisterDTO.setToken(jwt);
-                            return Mono.just(userRegisterDTO);
-                        }));
+    public String registerUser(@RequestBody CreateUserDTO createUserDTO) {
+        User existingUser = userService.findByUsername(createUserDTO.getUsername());
+        if (existingUser != null) {
+            logger.info("Username already exists: " + createUserDTO.getUsername());
+            throw new UserAlreadyExistsException("Username already exists: " + createUserDTO.getUsername());
+        } else {
+            userService.registerUser(new User(createUserDTO.getName(), createUserDTO.getUsername(), createUserDTO.getEmail(), createUserDTO.getPassword(), createUserDTO.getRoleType()));
+            return "User registered successfully";
+        }
     }
 
     @PostMapping("/login")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Login successful"),
-            @ApiResponse(responseCode = "401", description = "Login failed"),
-            @ApiResponse(responseCode = "403", description = "Access forbidden")
+            @ApiResponse(responseCode = "401", description = "Login failed")
     })
-    public Mono<UserLoginDTO> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
-        return userService.findByUsername(userLoginDTO.getUsername())
-                .flatMap(user -> {
-                    try {
-                        Authentication authentication = authenticationManager.authenticate(
-                                new UsernamePasswordAuthenticationToken(userLoginDTO.getUsername(), userLoginDTO.getPassword()));
-
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                        UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDTO.getUsername());
-                        String jwt = jwtUtil.generateToken(user.getUsername(), List.of("ROLE_" + user.getRoleType().name()));
-
-                        userLoginDTO.setToken(jwt);
-                        logger.info("Authentication successful for user: " + userLoginDTO.getUsername());
-                        return Mono.just(userLoginDTO);
-                    } catch (Exception e) {
-                        logger.error("Login failed for user: " + userLoginDTO.getUsername(), e);
-                        return Mono.error(new RuntimeException("Invalid username or password"));
-                    }
-                })
-                .switchIfEmpty(Mono.error(new RuntimeException("Invalid username or password")));
+    public ResponseEntity<?> loginUser(@RequestBody UserRequestDTO authenticationRequest) throws Exception {
+        userService.authenticateUser(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final String token = jwtTokenUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new UserResponseDTO(token));
     }
-
 }
