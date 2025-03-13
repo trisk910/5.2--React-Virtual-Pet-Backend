@@ -1,8 +1,8 @@
-package cat.itacademy.s05.t02.service;
+package cat.itacademy.s05.t02.Service;
 
 
 import cat.itacademy.s05.t02.Models.Robo;
-import cat.itacademy.s05.t02.repository.PetRepository;
+import cat.itacademy.s05.t02.Repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

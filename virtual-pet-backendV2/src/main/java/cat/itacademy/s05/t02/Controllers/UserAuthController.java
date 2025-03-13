@@ -1,10 +1,8 @@
 package cat.itacademy.s05.t02.Controllers;
 
-import cat.itacademy.s05.t02.DTOs.CreateUserDTO;
-import cat.itacademy.s05.t02.DTOs.UserDTO;
-import cat.itacademy.s05.t02.Models.Enums.RoleType;
+import cat.itacademy.s05.t02.DTOs.User.CreateUserDTO;
 import cat.itacademy.s05.t02.Models.User;
-import cat.itacademy.s05.t02.service.UserService;
+import cat.itacademy.s05.t02.Service.UserService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.logging.log4j.LogManager;

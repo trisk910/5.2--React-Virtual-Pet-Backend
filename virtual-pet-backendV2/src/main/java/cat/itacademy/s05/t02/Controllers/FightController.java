@@ -1,14 +1,14 @@
 package cat.itacademy.s05.t02.Controllers;
 
-import cat.itacademy.s05.t02.DTOs.CreateFightDTO;
-import cat.itacademy.s05.t02.DTOs.FightDTO;
+import cat.itacademy.s05.t02.DTOs.Fight.CreateFightDTO;
+import cat.itacademy.s05.t02.DTOs.Fight.FightDTO;
 import cat.itacademy.s05.t02.Exceptions.FightNotFoundException;
 import cat.itacademy.s05.t02.Exceptions.RoboNotFoundException;
 import cat.itacademy.s05.t02.Models.Fight;
 import cat.itacademy.s05.t02.Models.Robo;
-import cat.itacademy.s05.t02.repository.FightRepository;
-import cat.itacademy.s05.t02.service.FightSimulator;
-import cat.itacademy.s05.t02.service.RoboService;
+import cat.itacademy.s05.t02.Repository.FightRepository;
+import cat.itacademy.s05.t02.Service.FightSimulator;
+import cat.itacademy.s05.t02.Service.RoboService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

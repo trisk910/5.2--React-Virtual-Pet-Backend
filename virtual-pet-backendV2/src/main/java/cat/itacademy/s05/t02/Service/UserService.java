@@ -1,4 +1,4 @@
-package cat.itacademy.s05.t02.service;
+package cat.itacademy.s05.t02.Service;
 
 import cat.itacademy.s05.t02.Models.User;
 import reactor.core.publisher.Mono;

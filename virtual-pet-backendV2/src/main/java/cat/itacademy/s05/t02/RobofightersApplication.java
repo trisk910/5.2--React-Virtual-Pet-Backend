@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @OpenAPIDefinition
-public class S05T02Application {
+public class RobofightersApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(S05T02Application.class, args);
+		SpringApplication.run(RobofightersApplication.class, args);
 	}
 
 }

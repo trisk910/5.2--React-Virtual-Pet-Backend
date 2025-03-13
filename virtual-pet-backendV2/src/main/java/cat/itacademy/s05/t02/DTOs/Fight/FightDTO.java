@@ -1,4 +1,4 @@
-package cat.itacademy.s05.t02.DTOs;
+package cat.itacademy.s05.t02.DTOs.Fight;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

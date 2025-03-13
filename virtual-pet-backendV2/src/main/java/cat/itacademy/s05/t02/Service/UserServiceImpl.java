@@ -1,8 +1,8 @@
-package cat.itacademy.s05.t02.service;
+package cat.itacademy.s05.t02.Service;
 
 
 import cat.itacademy.s05.t02.Models.User;
-import cat.itacademy.s05.t02.repository.UserRepository;
+import cat.itacademy.s05.t02.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;

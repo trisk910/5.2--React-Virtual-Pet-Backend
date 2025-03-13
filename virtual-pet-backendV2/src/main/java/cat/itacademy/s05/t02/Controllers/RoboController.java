@@ -1,14 +1,13 @@
 package cat.itacademy.s05.t02.Controllers;
 
-import cat.itacademy.s05.t02.DTOs.CreateRoboDTO;
-import cat.itacademy.s05.t02.DTOs.RoboDTO;
+import cat.itacademy.s05.t02.DTOs.Robo.CreateRoboDTO;
+import cat.itacademy.s05.t02.DTOs.Robo.RoboDTO;
 import cat.itacademy.s05.t02.Exceptions.RoboNotFoundException;
 import cat.itacademy.s05.t02.Models.Robo;
-import cat.itacademy.s05.t02.service.RoboService;
+import cat.itacademy.s05.t02.Service.RoboService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
