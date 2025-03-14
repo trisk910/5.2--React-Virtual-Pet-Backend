@@ -13,5 +13,6 @@ public class CreateUserDTO {
     private String username;
     private String email;
     private String password;
-    private RoleType roleType;
+    private RoleType roleType = RoleType.USER;
+    private String profileImage;
 }

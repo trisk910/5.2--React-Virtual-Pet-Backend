@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoboDTO {
+public class RoboResponseDTO {
     private Long id;
     private String name;
     private RoboType type;

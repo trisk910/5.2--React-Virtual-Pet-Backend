@@ -37,4 +37,9 @@ package cat.itacademy.s05.t02.Service;
             public Robo updateRobo(Robo robo) {
                 return roboRepository.save(robo);
             }
+
+            @Override
+            public List<Robo> getRobosByUserId(Long userId) {
+                return roboRepository.findByUserId(userId);
+            }
         }

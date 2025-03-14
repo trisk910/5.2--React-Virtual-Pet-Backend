@@ -22,6 +22,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "RoleType")
     private RoleType roleType;
+    private String profileImage;
+
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Robo> robos;
@@ -29,12 +31,13 @@ public class User {
     public User() {
     }
 
-    public User(String name, String username, String email, String password, RoleType roleType) {
+    public User(String name, String username, String email, String password, RoleType roleType, String profileImage) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.roleType = roleType;
+        this.profileImage = profileImage;
     }
 
     public Long getId() {
@@ -90,5 +93,13 @@ public class User {
 
     public void setRobos(List<Robo> robos) {
         this.robos = robos;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

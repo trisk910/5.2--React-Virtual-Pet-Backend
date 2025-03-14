@@ -1,5 +1,6 @@
 package cat.itacademy.s05.t02.Controllers;
 
+import cat.itacademy.s05.t02.DTOs.User.UserDTO;
 import cat.itacademy.s05.t02.Security.JwtTokenUtil;
 import cat.itacademy.s05.t02.DTOs.User.CreateUserDTO;
 import cat.itacademy.s05.t02.DTOs.User.UserRequestDTO;
@@ -17,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -45,7 +49,7 @@ public class UserAuthController {
             logger.info("Username already exists: " + createUserDTO.getUsername());
             throw new UserAlreadyExistsException("Username already exists: " + createUserDTO.getUsername());
         } else {
-            userService.registerUser(new User(createUserDTO.getName(), createUserDTO.getUsername(), createUserDTO.getEmail(), createUserDTO.getPassword(), createUserDTO.getRoleType()));
+            userService.registerUser(new User(createUserDTO.getName(), createUserDTO.getUsername(), createUserDTO.getEmail(), createUserDTO.getPassword(), createUserDTO.getRoleType(),createUserDTO.getProfileImage()));
             return "User registered successfully";
         }
     }
@@ -59,6 +63,10 @@ public class UserAuthController {
         userService.authenticateUser(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new UserResponseDTO(token));
+        User user = userService.findByUsername(authenticationRequest.getUsername());
+        UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getEmail(), user.getRoleType(), user.getProfileImage());
+        return ResponseEntity.ok(new UserResponseDTO(token, userDTO));
     }
+
+
 }

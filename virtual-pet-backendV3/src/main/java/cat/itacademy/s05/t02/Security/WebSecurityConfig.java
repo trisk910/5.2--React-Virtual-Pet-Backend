@@ -44,6 +44,7 @@ public class WebSecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(
 						auth -> auth.requestMatchers(WHITE_LIST_URL).permitAll().anyRequest().authenticated());
+		http.addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
@@ -53,9 +54,9 @@ public class WebSecurityConfig {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
-		config.setAllowedOrigins(List.of("http://localhost:3000"));
-		config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-		config.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Specify allowed headers
+		config.setAllowedOrigins(List.of("http://localhost:3000")); // Allow requests from localhost:3000
+		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+		config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 		source.registerCorsConfiguration("/**", config);
 		return new CorsFilter(source);
 	}
