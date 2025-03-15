@@ -114,7 +114,6 @@ public class RoboController {
                 updatedRobo.getUserId(), updatedRobo.getHealth(),  updatedRobo.getAttack(), updatedRobo.getDefense(),
                 updatedRobo.getSpeed(), updatedRobo.getHappiness()
         );
-
         return ResponseEntity.ok(roboDTO);
     }
 
