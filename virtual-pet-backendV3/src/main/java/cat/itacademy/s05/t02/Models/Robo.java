@@ -19,7 +19,7 @@ public class Robo {
     private int attack;
     private int defense;
     private int speed;
-    private int happiness;
+    //private int happiness;
     private Long userId;
 
     private int originalHealth;
@@ -31,7 +31,7 @@ public class Robo {
         this.name = name;
         this.type = type;
         setStats(type);
-        happiness = 100;
+        //happiness = 100;
         this.userId = userId;
     }
 
@@ -102,13 +102,13 @@ public class Robo {
         this.speed = speed;
     }
 
-    public int getHappiness() {
+    /*public int getHappiness() {
         return happiness;
     }
 
     public void setHappiness(int happiness) {
         this.happiness = happiness;
-    }
+    }*/
 
     private void setStats(RoboType roboType) {
         Random random = new Random();
@@ -136,7 +136,7 @@ public class Robo {
         }
     }
 
-    // Getters and setters for the new fields
+
     public int getOriginalHealth() {
         return originalHealth;
     }
@@ -175,21 +175,22 @@ public class Robo {
             this.attack -= this.attack * 0.02;
             this.defense -= this.defense * 0.02;
             this.speed -= this.speed * 0.02;
-            if(this.happiness < 100) {
-                this.happiness += 4;
-            } else if (this.happiness > 100) {
-                this.happiness = 100;
-            }
         } else {
             this.health -= this.health * 0.10;
             this.attack -= this.attack * 0.10;
             this.defense -= this.defense * 0.10;
             this.speed -= this.speed * 0.10;
-            if(this.happiness > 0) {
-                this.happiness -= 8;
-            } else if (this.happiness < 0) {
-                this.happiness = 0;
-            }
+        }
+        if (this.health < 0) {
+            this.health = 0;
         }
     }
+
+    public boolean canFight() {
+        return this.health > this.originalHealth * 0.30 &&
+                this.attack > this.originalAttack * 0.30 &&
+                this.defense > this.originalDefense * 0.30 &&
+                this.speed > this.originalSpeed * 0.30;
+    }
+
 }

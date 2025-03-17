@@ -6,7 +6,6 @@ import cat.itacademy.s05.t02.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,5 +51,18 @@ public class UserServiceImpl implements UserService {
         } catch (BadCredentialsException e) {
             throw new AuthenticationException("INVALID_CREDENTIALS", e);
         }
+    }
+    @Override
+    public void addCurrency(String username, int amount) {
+        User user = userRepository.findByUsername(username);
+        user.setCurrency(user.getCurrency() + amount);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void subtractCurrency(String username, int amount) {
+        User user = userRepository.findByUsername(username);
+        user.setCurrency(user.getCurrency() - amount);
+        userRepository.save(user);
     }
 }

@@ -17,5 +17,5 @@ public class RoboDTO {
     private int attack;
     private int defense;
     private int speed;
-    private int happiness;
+    //private int happiness;
 }

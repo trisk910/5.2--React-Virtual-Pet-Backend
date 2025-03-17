@@ -49,13 +49,11 @@ public class FightController {
             logger.error("Robo not found");
             throw new RoboNotFoundException("Robo not found");
         }
-
         List<String> combatLog = fightSimulator.simulateFight(robo1, robo2);
         String winner = robo1.getHealth() > 0 ? robo1.getName() : robo2.getName();
-
         Fight fight = new Fight(robo1.getName(), robo2.getName(), winner);
         Fight savedFight = fightRepository.save(fight);
-        FightDTO fightDTO = new FightDTO(savedFight.getId(), savedFight.getRobo1Name(), savedFight.getRobo2Name(), savedFight.getWinner());
+        FightDTO fightDTO = new FightDTO(savedFight.getId(), savedFight.getRobo1Name(), savedFight.getRobo2Name(), savedFight.getWinner(), combatLog);
         fightDTO.setCombatLog(combatLog);
         return ResponseEntity.ok(fightDTO);
     }

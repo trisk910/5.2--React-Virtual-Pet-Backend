@@ -23,6 +23,7 @@ public class User {
     @Column(name = "RoleType")
     private RoleType roleType;
     private String profileImage;
+    private int currency;
 
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -101,5 +102,13 @@ public class User {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public int getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(int currency) {
+        this.currency = currency;
     }
 }

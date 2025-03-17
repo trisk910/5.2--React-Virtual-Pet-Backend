@@ -40,7 +40,7 @@ public class RoboController {
         Robo savedRobo = roboService.buildRobo(robo);
         RoboDTO roboDTO = new RoboDTO(
                 savedRobo.getId(),savedRobo.getName(),savedRobo.getType(),savedRobo.getUserId(),savedRobo.getHealth(),
-                savedRobo.getAttack(), savedRobo.getDefense(), savedRobo.getSpeed(),savedRobo.getHappiness()
+                savedRobo.getAttack(), savedRobo.getDefense(), savedRobo.getSpeed()/*,savedRobo.getHappiness()*/
         );
         return ResponseEntity.ok(roboDTO);
     }
@@ -73,7 +73,7 @@ public class RoboController {
         List<RoboResponseDTO> roboDTOs = robos.stream()
                 .map(robo -> new RoboResponseDTO(
                         robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
-                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed(), robo.getHappiness()))
+                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()/*, robo.getHappiness()*/))
                 .collect(Collectors.toList());
 
         AdminRobosDTO adminRobosDTO = new AdminRobosDTO(roboDTOs.size(), roboDTOs);
@@ -92,7 +92,7 @@ public class RoboController {
         List<RoboResponseDTO> roboDTOs = robos.stream()
                 .map(robo -> new RoboResponseDTO(
                         robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
-                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed(), robo.getHappiness()))
+                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()/*, robo.getHappiness()*/))
                 .collect(Collectors.toList());
         UserRobosDTO userRobosDTO = new UserRobosDTO(id, roboDTOs);
         return ResponseEntity.ok(userRobosDTO);
@@ -114,7 +114,7 @@ public class RoboController {
         Robo updatedRobo = roboService.updateRobo(existingRobo);
         RoboDTO roboDTO = new RoboDTO( updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(),
                 updatedRobo.getUserId(), updatedRobo.getHealth(),  updatedRobo.getAttack(), updatedRobo.getDefense(),
-                updatedRobo.getSpeed(), updatedRobo.getHappiness()
+                updatedRobo.getSpeed()/*, updatedRobo.getHappiness()*/
         );
         return ResponseEntity.ok(roboDTO);
     }
@@ -139,7 +139,7 @@ public class RoboController {
         RoboDTO roboDTO = new RoboDTO(
                 updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(),
                 updatedRobo.getUserId(), updatedRobo.getHealth(), updatedRobo.getAttack(),
-                updatedRobo.getDefense(), updatedRobo.getSpeed(), updatedRobo.getHappiness()
+                updatedRobo.getDefense(), updatedRobo.getSpeed()/*, updatedRobo.getHappiness()*/
         );
         return ResponseEntity.ok(roboDTO);
     }
