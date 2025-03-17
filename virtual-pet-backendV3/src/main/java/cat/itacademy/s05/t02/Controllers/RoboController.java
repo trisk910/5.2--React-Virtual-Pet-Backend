@@ -1,9 +1,6 @@
 package cat.itacademy.s05.t02.Controllers;
 
-import cat.itacademy.s05.t02.DTOs.Robo.CreateRoboDTO;
-import cat.itacademy.s05.t02.DTOs.Robo.RoboDTO;
-import cat.itacademy.s05.t02.DTOs.Robo.RoboResponseDTO;
-import cat.itacademy.s05.t02.DTOs.Robo.UserRobosDTO;
+import cat.itacademy.s05.t02.DTOs.Robo.*;
 import cat.itacademy.s05.t02.Exceptions.RoboNotFoundException;
 import cat.itacademy.s05.t02.Models.Robo;
 import cat.itacademy.s05.t02.Service.RoboService;
@@ -15,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,19 +63,23 @@ public class RoboController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Get all robos", description = "Retrieves all robos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Robos retrieved successfully")
     })
-    public ResponseEntity<List<RoboResponseDTO>> getAllRobos() {
+    public ResponseEntity<AdminRobosDTO> getAllRobos() {
         List<Robo> robos = roboService.getAllRobos();
         List<RoboResponseDTO> roboDTOs = robos.stream()
                 .map(robo -> new RoboResponseDTO(
                         robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
                         robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed(), robo.getHappiness()))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(roboDTOs);
+
+        AdminRobosDTO adminRobosDTO = new AdminRobosDTO(roboDTOs.size(), roboDTOs);
+        return ResponseEntity.ok(adminRobosDTO);
     }
+
 
     @GetMapping("/get/{id}")
     @Operation(summary = "Get robos by user ID", description = "Retrieves all robos associated with a user by user ID")
@@ -117,4 +119,28 @@ public class RoboController {
         return ResponseEntity.ok(roboDTO);
     }
 
+    @PutMapping("/repair/{id}")
+    @Operation(summary = "Repair a robo", description = "Restores the stats of a robo to their original values")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Robo repaired successfully"),
+            @ApiResponse(responseCode = "404", description = "Robo not found")
+    })
+    public ResponseEntity<RoboDTO> repairRobo(@PathVariable Long id) {
+        Robo existingRobo = roboService.getRoboById(id);
+        if (existingRobo == null) {
+            logger.error("Robo not found: " + id);
+            throw new RoboNotFoundException("Robo not found with id: " + id);
+        }
+        existingRobo.setHealth(existingRobo.getOriginalHealth());
+        existingRobo.setAttack(existingRobo.getOriginalAttack());
+        existingRobo.setDefense(existingRobo.getOriginalDefense());
+        existingRobo.setSpeed(existingRobo.getOriginalSpeed());
+        Robo updatedRobo = roboService.updateRobo(existingRobo);
+        RoboDTO roboDTO = new RoboDTO(
+                updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(),
+                updatedRobo.getUserId(), updatedRobo.getHealth(), updatedRobo.getAttack(),
+                updatedRobo.getDefense(), updatedRobo.getSpeed(), updatedRobo.getHappiness()
+        );
+        return ResponseEntity.ok(roboDTO);
+    }
 }

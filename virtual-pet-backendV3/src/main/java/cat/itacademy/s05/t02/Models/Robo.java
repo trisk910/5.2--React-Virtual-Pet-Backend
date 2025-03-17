@@ -22,6 +22,11 @@ public class Robo {
     private int happiness;
     private Long userId;
 
+    private int originalHealth;
+    private int originalAttack;
+    private int originalDefense;
+    private int originalSpeed;
+
     public Robo(String name, RoboType type, Long userId) {
         this.name = name;
         this.type = type;
@@ -109,25 +114,82 @@ public class Robo {
         Random random = new Random();
         switch (roboType) {
             case melee:
-                this.health = 50 + random.nextInt(51);
-                this.attack = 70 + random.nextInt(31);
-                this.defense = 30 + random.nextInt(21);
-                this.speed = 85 + random.nextInt(16);
+                this.health = this.originalHealth = 50 + random.nextInt(51);
+                this.attack = this.originalAttack = 70 + random.nextInt(31);
+                this.defense = this.originalDefense = 30 + random.nextInt(21);
+                this.speed = this.originalSpeed = 85 + random.nextInt(16);
                 break;
             case ranged:
-                this.health = 60 + random.nextInt(41);
-                this.attack = 60 + random.nextInt(41);
-                this.defense = 40 + random.nextInt(21);
-                this.speed = 60 + random.nextInt(41);
+                this.health = this.originalHealth = 60 + random.nextInt(41);
+                this.attack = this.originalAttack = 60 + random.nextInt(41);
+                this.defense = this.originalDefense = 40 + random.nextInt(21);
+                this.speed = this.originalSpeed = 60 + random.nextInt(41);
                 break;
             case tank:
-                this.health = 100 + random.nextInt(51);
-                this.attack = 50 + random.nextInt(31);
-                this.defense = 70 + random.nextInt(31);
-                this.speed = 30 + random.nextInt(21);
+                this.health = this.originalHealth = 100 + random.nextInt(51);
+                this.attack = this.originalAttack = 50 + random.nextInt(31);
+                this.defense = this.originalDefense = 70 + random.nextInt(31);
+                this.speed = this.originalSpeed = 30 + random.nextInt(21);
                 break;
             default:
                 throw new RoboTypeNotFoundException("Invalid pet type: " + roboType);
+        }
+    }
+
+    // Getters and setters for the new fields
+    public int getOriginalHealth() {
+        return originalHealth;
+    }
+
+    public void setOriginalHealth(int originalHealth) {
+        this.originalHealth = originalHealth;
+    }
+
+    public int getOriginalAttack() {
+        return originalAttack;
+    }
+
+    public void setOriginalAttack(int originalAttack) {
+        this.originalAttack = originalAttack;
+    }
+
+    public int getOriginalDefense() {
+        return originalDefense;
+    }
+
+    public void setOriginalDefense(int originalDefense) {
+        this.originalDefense = originalDefense;
+    }
+
+    public int getOriginalSpeed() {
+        return originalSpeed;
+    }
+
+    public void setOriginalSpeed(int originalSpeed) {
+        this.originalSpeed = originalSpeed;
+    }
+
+    public void reduceStats(boolean wonBattle) {
+        if (wonBattle) {
+            this.health -= this.health * 0.02;
+            this.attack -= this.attack * 0.02;
+            this.defense -= this.defense * 0.02;
+            this.speed -= this.speed * 0.02;
+            if(this.happiness < 100) {
+                this.happiness += 4;
+            } else if (this.happiness > 100) {
+                this.happiness = 100;
+            }
+        } else {
+            this.health -= this.health * 0.10;
+            this.attack -= this.attack * 0.10;
+            this.defense -= this.defense * 0.10;
+            this.speed -= this.speed * 0.10;
+            if(this.happiness > 0) {
+                this.happiness -= 8;
+            } else if (this.happiness < 0) {
+                this.happiness = 0;
+            }
         }
     }
 }

@@ -43,14 +43,22 @@ public class FightController {
     public ResponseEntity<FightDTO> simulateFight(@RequestBody CreateFightDTO createFightDTO) {
         Robo robo1 = roboService.getRoboById(createFightDTO.getRobo1Id());
         Robo robo2 = roboService.getRoboById(createFightDTO.getRobo2Id());
-
         if (robo1 == null || robo2 == null) {
             logger.error("Robo not found");
             throw new RoboNotFoundException("Robo not found");
         }
-
         String winner = fightSimulator.determineWinner(robo1, robo2);
         logger.info("Winner: " + winner);
+
+        if (winner.equals(robo1.getName())) {
+            robo1.reduceStats(true);
+            robo2.reduceStats(false);
+        } else {
+            robo1.reduceStats(false);
+            robo2.reduceStats(true);
+        }
+        roboService.updateRobo(robo1);
+        roboService.updateRobo(robo2);
         Fight fight = new Fight(robo1.getName(), robo2.getName(), winner);
         Fight savedFight = fightRepository.save(fight);
         FightDTO fightDTO = new FightDTO(savedFight.getId(), savedFight.getRobo1Name(), savedFight.getRobo2Name(), savedFight.getWinner());
