@@ -1,38 +1,38 @@
 package cat.itacademy.s05.t02.Models;
 
+import cat.itacademy.s05.t02.Models.Enums.CombatPhrases;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class FightSimulator {
 
-    public String determineWinner(Robo robo1, Robo robo2) {
-        Random random = new Random();
-        int pet1Points = 0;
-        int pet2Points = 0;
+    private final Random random = new Random();
 
-        if (random.nextInt(robo1.getHealth()) > random.nextInt(robo2.getHealth())) {
-            pet1Points++;
-        } else {
-            pet2Points++;
+    public List<String> simulateFight(Robo robo1, Robo robo2) {
+        List<String> combatLog = new ArrayList<>();
+        while (robo1.getHealth() > 0 && robo2.getHealth() > 0) {
+            combatLog.add(performAttack(robo1, robo2));
+            if (robo2.getHealth() <= 0) {
+                combatLog.add(robo1.getName() + " " + CombatPhrases.WINNER.getPhrase());
+                break;
+            }
+            combatLog.add(performAttack(robo2, robo1));
+            if (robo1.getHealth() <= 0) {
+                combatLog.add(robo2.getName() + " " + CombatPhrases.WINNER.getPhrase());
+            }
         }
+        return combatLog;
+    }
 
-        if (random.nextInt(robo1.getAttack()) > random.nextInt(robo2.getAttack())) {
-            pet1Points++;
+    private String performAttack(Robo attacker, Robo defender) {
+        if (random.nextBoolean()) {
+            int damage = random.nextInt(attacker.getAttack());
+            defender.setHealth(defender.getHealth() - damage);
+            return String.format(attacker.getName() + " " + CombatPhrases.ATTACK_HIT.getPhrase(), damage);
         } else {
-            pet2Points++;
+            return attacker.getName() + " " + CombatPhrases.ATTACK_MISS.getPhrase();
         }
-
-        if (random.nextInt(robo1.getDefense()) > random.nextInt(robo2.getDefense())) {
-            pet1Points++;
-        } else {
-            pet2Points++;
-        }
-
-        if (random.nextInt(robo1.getSpeed()) > random.nextInt(robo2.getSpeed())) {
-            pet1Points++;
-        } else {
-            pet2Points++;
-        }
-
-        return pet1Points > pet2Points ? robo1.getName() : robo2.getName();
     }
 }
