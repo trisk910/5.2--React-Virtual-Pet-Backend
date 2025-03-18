@@ -73,7 +73,7 @@ public class RoboController {
         List<RoboResponseDTO> roboDTOs = robos.stream()
                 .map(robo -> new RoboResponseDTO(
                         robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
-                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()/*, robo.getHappiness()*/))
+                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()))
                 .collect(Collectors.toList());
 
         AdminRobosDTO adminRobosDTO = new AdminRobosDTO(roboDTOs.size(), roboDTOs);
@@ -92,7 +92,7 @@ public class RoboController {
         List<RoboResponseDTO> roboDTOs = robos.stream()
                 .map(robo -> new RoboResponseDTO(
                         robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
-                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()/*, robo.getHappiness()*/))
+                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()))
                 .collect(Collectors.toList());
         UserRobosDTO userRobosDTO = new UserRobosDTO(id, roboDTOs);
         return ResponseEntity.ok(userRobosDTO);
@@ -114,7 +114,7 @@ public class RoboController {
         Robo updatedRobo = roboService.updateRobo(existingRobo);
         RoboDTO roboDTO = new RoboDTO( updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(),
                 updatedRobo.getUserId(), updatedRobo.getHealth(),  updatedRobo.getAttack(), updatedRobo.getDefense(),
-                updatedRobo.getSpeed()/*, updatedRobo.getHappiness()*/
+                updatedRobo.getSpeed()
         );
         return ResponseEntity.ok(roboDTO);
     }
@@ -139,8 +139,23 @@ public class RoboController {
         RoboDTO roboDTO = new RoboDTO(
                 updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(),
                 updatedRobo.getUserId(), updatedRobo.getHealth(), updatedRobo.getAttack(),
-                updatedRobo.getDefense(), updatedRobo.getSpeed()/*, updatedRobo.getHappiness()*/
+                updatedRobo.getDefense(), updatedRobo.getSpeed()
         );
         return ResponseEntity.ok(roboDTO);
+    }
+
+    @PostMapping("/repair/all")
+    @Operation(summary = "Repair all robos", description = "Restores the stats of all robos to their original values")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All robos repaired successfully")
+    })
+    public ResponseEntity<String> repairAllRobos() {
+        List<Robo> repairedRobos = roboService.repairAllRobos();
+        List<RoboDTO> roboDTOs = repairedRobos.stream()
+                .map(robo -> new RoboDTO(
+                        robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
+                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok("All robos repaired successfully");
     }
 }

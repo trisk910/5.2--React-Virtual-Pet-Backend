@@ -1,4 +1,3 @@
-
 package cat.itacademy.s05.t02.Models;
 
 import cat.itacademy.s05.t02.Models.Enums.CombatPhrases;
@@ -55,6 +54,7 @@ public class FightSimulator {
                 userService.addCurrency(secondAttacker.getUserId(), CURRENCY_REWARD);
                 resetHealthAndStats(robo1, initialHealthRobo1, currentHealthRobo1);
                 resetHealthAndStats(robo2, initialHealthRobo2, currentHealthRobo2);
+                break;
             }
         } while (robo1.getHealth() > 0 && robo2.getHealth() > 0);
 
@@ -64,12 +64,12 @@ public class FightSimulator {
     private String performAttack(Robo attacker, Robo defender) {
         if (random.nextBoolean()) {
             int damage = random.nextInt(attacker.getAttack());
-            defender.setHealth(defender.getHealth() - damage);
+            defender.setHealth(Math.max(defender.getHealth() - damage, 0));
             String attackLog = String.format(attacker.getName() + " " + CombatPhrases.ATTACK_HIT.getPhrase(), damage);
 
             if (random.nextDouble() < 0.15) {
                 int counterDamage = random.nextInt(defender.getAttack());
-                attacker.setHealth(attacker.getHealth() - counterDamage);
+                attacker.setHealth(Math.max(attacker.getHealth() - counterDamage, 0));
                 attackLog += " And " + String.format(defender.getName() + " " + CombatPhrases.COUNTER_ATTACK.getPhrase(), counterDamage);
             }
             return attackLog;

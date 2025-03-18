@@ -10,4 +10,5 @@ public interface RoboService {
     List<Robo> getRobosByUserId(Long userId);
     Robo getRoboById(Long id);
     Robo updateRobo(Robo robo);
+    List<Robo> repairAllRobos();
 }
