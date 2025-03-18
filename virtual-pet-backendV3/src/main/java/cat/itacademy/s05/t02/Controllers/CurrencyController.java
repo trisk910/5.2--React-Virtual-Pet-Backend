@@ -15,17 +15,17 @@ public class CurrencyController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addCurrency(Authentication authentication, @RequestParam int amount) {
+    @PostMapping("/add/{value}")
+    public ResponseEntity<String> addCurrency(Authentication authentication, @PathVariable int value) {
         User user = userService.findByUsername(authentication.getName());
-        userService.addCurrency(user.getId(), amount);
+        userService.addCurrency(user.getId(), value);
         return ResponseEntity.ok("Currency added successfully");
     }
 
-    @PostMapping("/subtract")
-    public ResponseEntity<String> subtractCurrency(Authentication authentication, @RequestParam int amount) {
+    @PostMapping("/substract/{value}")
+    public ResponseEntity<String> substractCurrency(Authentication authentication, @PathVariable int value) {
         User user = userService.findByUsername(authentication.getName());
-        userService.subtractCurrency(user.getId(), amount);
+        userService.subtractCurrency(user.getId(), value);
         return ResponseEntity.ok("Currency subtracted successfully");
     }
 
