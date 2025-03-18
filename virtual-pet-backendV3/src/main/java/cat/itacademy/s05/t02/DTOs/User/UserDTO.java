@@ -15,4 +15,5 @@ public class UserDTO {
     private String email;
     private RoleType roleType;
     private String profileImage;
+    private int currency;
 }

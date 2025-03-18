@@ -64,9 +64,23 @@ public class UserAuthController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         User user = userService.findByUsername(authenticationRequest.getUsername());
-        UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getEmail(), user.getRoleType(), user.getProfileImage());
+        UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getEmail(), user.getRoleType(), user.getProfileImage(), user.getCurrency());
         return ResponseEntity.ok(new UserResponseDTO(token, userDTO));
     }
 
+    @GetMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        User user = userService.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException("User not found with id: " + id);
+        }
+        UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getEmail(),
+                user.getRoleType(), user.getProfileImage(), user.getCurrency());
+        return ResponseEntity.ok(userDTO);
+    }
 
 }

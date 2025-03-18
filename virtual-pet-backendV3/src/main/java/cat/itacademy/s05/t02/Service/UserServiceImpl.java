@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -53,15 +58,15 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public void addCurrency(String username, int amount) {
-        User user = userRepository.findByUsername(username);
+    public void addCurrency(Long userId, int amount) {
+        User user = userRepository.findById(userId).orElseThrow();
         user.setCurrency(user.getCurrency() + amount);
         userRepository.save(user);
     }
 
     @Override
-    public void subtractCurrency(String username, int amount) {
-        User user = userRepository.findByUsername(username);
+    public void subtractCurrency(Long userId, int amount) {
+        User user = userRepository.findById(userId).orElseThrow();
         user.setCurrency(user.getCurrency() - amount);
         userRepository.save(user);
     }

@@ -7,6 +7,7 @@ public interface UserService {
     boolean loginUser(String username, String password);
     User findByUsername(String username);
     void authenticateUser(String username, String password) throws Exception;
-    void addCurrency(String username, int currency);
-    void subtractCurrency(String username, int amount);
+    void addCurrency(Long userId, int currency);
+    void subtractCurrency(Long userId, int amount);
+    User findById(Long id);
 }
