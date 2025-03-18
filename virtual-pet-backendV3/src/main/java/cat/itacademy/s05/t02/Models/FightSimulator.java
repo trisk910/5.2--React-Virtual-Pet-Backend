@@ -71,6 +71,9 @@ public class FightSimulator {
                 int counterDamage = random.nextInt(defender.getAttack());
                 attacker.setHealth(Math.max(attacker.getHealth() - counterDamage, 0));
                 attackLog += " And " + String.format(defender.getName() + " " + CombatPhrases.COUNTER_ATTACK.getPhrase(), counterDamage);
+                if (attacker.getHealth() <= 0) {
+                    return attackLog;
+                }
             }
             return attackLog;
         } else {
