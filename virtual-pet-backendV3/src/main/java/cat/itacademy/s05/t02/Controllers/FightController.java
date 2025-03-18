@@ -9,6 +9,7 @@ import cat.itacademy.s05.t02.Models.Robo;
 import cat.itacademy.s05.t02.Repository.FightRepository;
 import cat.itacademy.s05.t02.Models.FightSimulator;
 import cat.itacademy.s05.t02.Service.RoboService;
+import cat.itacademy.s05.t02.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -33,7 +34,15 @@ public class FightController {
     @Autowired
     private RoboService roboService;
 
-    private final FightSimulator fightSimulator = new FightSimulator();
+    @Autowired
+    private UserService userService;
+
+    private final FightSimulator fightSimulator;
+
+    @Autowired
+    public FightController(UserService userService) {
+        this.fightSimulator = new FightSimulator(userService);
+    }
 
     @PostMapping("/fight")
     @Operation(summary = "Fight Robos", description = "Simulates a fight between two robos and saves the result")

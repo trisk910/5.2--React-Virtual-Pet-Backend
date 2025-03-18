@@ -1,3 +1,4 @@
+
 package cat.itacademy.s05.t02.Models;
 
 import cat.itacademy.s05.t02.Models.Enums.CombatPhrases;
@@ -13,8 +14,13 @@ import java.util.Random;
 public class FightSimulator {
 
     private final Random random = new Random();
+    private final UserService userService;
+    private final static int CURRENCY_REWARD = 12;
+
     @Autowired
-    private UserService userService;
+    public FightSimulator(UserService userService) {
+        this.userService = userService;
+    }
 
     public List<String> simulateFight(Robo robo1, Robo robo2) {
         List<String> combatLog = new ArrayList<>();
@@ -35,16 +41,18 @@ public class FightSimulator {
         do {
             combatLog.add(performAttack(firstAttacker, secondAttacker));
             if (secondAttacker.getHealth() <= 0) {
+                secondAttacker.setHealth(0);
                 combatLog.add(firstAttacker.getName() + " " + CombatPhrases.WINNER.getPhrase());
-                userService.addCurrency(firstAttacker.getUserId(), 100);
+                userService.addCurrency(firstAttacker.getUserId(), CURRENCY_REWARD);
                 resetHealthAndStats(robo1, initialHealthRobo1, currentHealthRobo1);
                 resetHealthAndStats(robo2, initialHealthRobo2, currentHealthRobo2);
                 break;
             }
             combatLog.add(performAttack(secondAttacker, firstAttacker));
             if (firstAttacker.getHealth() <= 0) {
+                firstAttacker.setHealth(0);
                 combatLog.add(secondAttacker.getName() + " " + CombatPhrases.WINNER.getPhrase());
-                userService.addCurrency(secondAttacker.getUserId(), 100);
+                userService.addCurrency(secondAttacker.getUserId(), CURRENCY_REWARD);
                 resetHealthAndStats(robo1, initialHealthRobo1, currentHealthRobo1);
                 resetHealthAndStats(robo2, initialHealthRobo2, currentHealthRobo2);
             }
@@ -73,7 +81,9 @@ public class FightSimulator {
     private void resetHealthAndStats(Robo robo, int initialHealth, int currentHealth) {
         robo.setHealth(currentHealth);
         if (robo.getHealth() < initialHealth) {
-            robo.reduceStats(robo.getHealth() == currentHealth);
+            robo.reduceStats(false);
+        } else {
+            robo.reduceStats(true);
         }
     }
 }
