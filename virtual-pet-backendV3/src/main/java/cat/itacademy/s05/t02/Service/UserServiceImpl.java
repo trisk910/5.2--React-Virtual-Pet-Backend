@@ -1,6 +1,7 @@
 package cat.itacademy.s05.t02.Service;
 
 import cat.itacademy.s05.t02.Exceptions.AuthenticationException;
+import cat.itacademy.s05.t02.Exceptions.UserNotFoundException;
 import cat.itacademy.s05.t02.Models.User;
 import cat.itacademy.s05.t02.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -69,5 +71,16 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow();
         user.setCurrency(user.getCurrency() - amount);
         userRepository.save(user);
+    }
+    @Override
+    public void incrementWins(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        user.setWins(user.getWins() + 1);
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getUsersRankedByWins() {
+        return userRepository.findAllByOrderByWinsDesc();
     }
 }

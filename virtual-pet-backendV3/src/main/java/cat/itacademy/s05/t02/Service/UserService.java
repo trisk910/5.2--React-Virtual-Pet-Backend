@@ -2,6 +2,8 @@ package cat.itacademy.s05.t02.Service;
 
 import cat.itacademy.s05.t02.Models.User;
 
+import java.util.List;
+
 public interface UserService {
     User registerUser(User user);
     boolean loginUser(String username, String password);
@@ -10,4 +12,6 @@ public interface UserService {
     void addCurrency(Long userId, int currency);
     void subtractCurrency(Long userId, int amount);
     User findById(Long id);
+    void incrementWins(Long userId);
+    List<User> getUsersRankedByWins();
 }

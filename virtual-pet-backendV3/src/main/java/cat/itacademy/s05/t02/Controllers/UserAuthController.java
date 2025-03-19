@@ -9,6 +9,7 @@ import cat.itacademy.s05.t02.Exceptions.UserAlreadyExistsException;
 import cat.itacademy.s05.t02.Exceptions.UserNotFoundException;
 import cat.itacademy.s05.t02.Models.User;
 import cat.itacademy.s05.t02.Service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +21,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -49,7 +52,8 @@ public class UserAuthController {
             logger.info("Username already exists: " + createUserDTO.getUsername());
             throw new UserAlreadyExistsException("Username already exists: " + createUserDTO.getUsername());
         } else {
-            userService.registerUser(new User(createUserDTO.getName(), createUserDTO.getUsername(), createUserDTO.getEmail(), createUserDTO.getPassword(), createUserDTO.getRoleType(),createUserDTO.getProfileImage()));
+            userService.registerUser(new User(createUserDTO.getName(), createUserDTO.getUsername(), createUserDTO.getEmail(),
+                    createUserDTO.getPassword(), createUserDTO.getRoleType(),createUserDTO.getCurrency(),createUserDTO.getProfileImage()));
             return "User registered successfully";
         }
     }
@@ -64,7 +68,8 @@ public class UserAuthController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         User user = userService.findByUsername(authenticationRequest.getUsername());
-        UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getEmail(), user.getRoleType(), user.getProfileImage(), user.getCurrency());
+        UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getEmail(), user.getRoleType(),
+                user.getProfileImage(), user.getCurrency(), user.getWins());
         return ResponseEntity.ok(new UserResponseDTO(token, userDTO));
     }
 
@@ -79,8 +84,20 @@ public class UserAuthController {
             throw new UserNotFoundException("User not found with id: " + id);
         }
         UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getEmail(),
-                user.getRoleType(), user.getProfileImage(), user.getCurrency());
+                user.getRoleType(), user.getProfileImage(), user.getCurrency(), user.getWins());
         return ResponseEntity.ok(userDTO);
+    }
+
+    @GetMapping("/ranking")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ranking retrieved successfully")
+    })
+    public ResponseEntity<List<UserDTO>> getUserRanking() {
+        List<User> users = userService.getUsersRankedByWins();
+        List<UserDTO> userDTOs = users.stream()
+                .map(user -> new UserDTO(user.getId(), user.getName(), user.getWins()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userDTOs);
     }
 
 }

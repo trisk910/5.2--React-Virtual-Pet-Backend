@@ -23,7 +23,9 @@ public class User {
     @Column(name = "RoleType")
     private RoleType roleType;
     private String profileImage;
-    private int currency;
+    private int currency = 100;
+    @Column(name = "wins")
+    private int wins;
 
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -32,12 +34,13 @@ public class User {
     public User() {
     }
 
-    public User(String name, String username, String email, String password, RoleType roleType, String profileImage) {
+    public User(String name, String username, String email, String password, RoleType roleType,int Currency, String profileImage) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.roleType = roleType;
+        this.currency = Currency;
         this.profileImage = profileImage;
     }
 
@@ -110,5 +113,13 @@ public class User {
 
     public void setCurrency(int currency) {
         this.currency = currency;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
     }
 }

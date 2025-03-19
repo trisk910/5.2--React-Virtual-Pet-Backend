@@ -34,7 +34,7 @@ public class FightSimulator {
         int currentHealthRobo1 = robo1.getHealth();
         int currentHealthRobo2 = robo2.getHealth();
 
-        Robo firstAttacker = robo1.getSpeed() >= robo2.getSpeed() ? robo1 : robo2;
+        Robo firstAttacker = robo1.getSpeed() <= robo2.getSpeed() ? robo1 : robo2;
         Robo secondAttacker = firstAttacker == robo1 ? robo2 : robo1;
 
         do {
@@ -43,6 +43,7 @@ public class FightSimulator {
                 secondAttacker.setHealth(0);
                 combatLog.add(firstAttacker.getName() + " " + CombatPhrases.WINNER.getPhrase());
                 userService.addCurrency(firstAttacker.getUserId(), CURRENCY_REWARD);
+                userService.incrementWins(secondAttacker.getUserId());
                 resetHealthAndStats(robo1, initialHealthRobo1, currentHealthRobo1);
                 resetHealthAndStats(robo2, initialHealthRobo2, currentHealthRobo2);
                 break;
@@ -52,6 +53,7 @@ public class FightSimulator {
                 firstAttacker.setHealth(0);
                 combatLog.add(secondAttacker.getName() + " " + CombatPhrases.WINNER.getPhrase());
                 userService.addCurrency(secondAttacker.getUserId(), CURRENCY_REWARD);
+                userService.incrementWins(secondAttacker.getUserId());
                 resetHealthAndStats(robo1, initialHealthRobo1, currentHealthRobo1);
                 resetHealthAndStats(robo2, initialHealthRobo2, currentHealthRobo2);
                 break;
