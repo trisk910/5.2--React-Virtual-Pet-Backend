@@ -1,6 +1,7 @@
 package cat.itacademy.s05.t02.Controllers;
 
 import cat.itacademy.s05.t02.DTOs.User.UserDTO;
+import cat.itacademy.s05.t02.DTOs.User.UserLeaderboardDTO;
 import cat.itacademy.s05.t02.Security.JwtTokenUtil;
 import cat.itacademy.s05.t02.DTOs.User.CreateUserDTO;
 import cat.itacademy.s05.t02.DTOs.User.UserRequestDTO;
@@ -92,12 +93,11 @@ public class UserAuthController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ranking retrieved successfully")
     })
-    public ResponseEntity<List<UserDTO>> getUserRanking() {
+    public ResponseEntity<List<UserLeaderboardDTO>> getUserRanking() {
         List<User> users = userService.getUsersRankedByWins();
-        List<UserDTO> userDTOs = users.stream()
-                .map(user -> new UserDTO(user.getId(), user.getName(), user.getWins()))
+        List<UserLeaderboardDTO> UserLeaderboardDTO = users.stream()
+                .map(user -> new UserLeaderboardDTO(user.getId(), user.getUsername(), user.getWins()))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(userDTOs);
+        return ResponseEntity.ok(UserLeaderboardDTO);
     }
-
 }

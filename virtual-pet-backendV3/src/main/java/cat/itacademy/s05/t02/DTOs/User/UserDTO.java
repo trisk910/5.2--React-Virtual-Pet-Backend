@@ -17,10 +17,4 @@ public class UserDTO {
     private String profileImage;
     private int currency;
     private int wins;
-
-    public UserDTO(Long id, String name, int wins) {
-        this.id = id;
-        this.name = name;
-        this.wins = wins;
-    }
 }
