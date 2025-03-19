@@ -158,4 +158,15 @@ public class RoboController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok("All robos repaired successfully");
     }
+
+
+    @PostMapping("/{id}/increment-stat")
+    public ResponseEntity<String> incrementStat(@PathVariable Long id, @RequestParam String stat) {
+        boolean success = roboService.incrementStat(id, stat);
+        if (success) {
+            return ResponseEntity.ok("Stat incremented successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Insufficient currency or invalid stat");
+        }
+    }
 }
