@@ -1,5 +1,6 @@
 package cat.itacademy.s05.t02.Service;
 
+import cat.itacademy.s05.t02.Exceptions.RoboNotFoundException;
 import cat.itacademy.s05.t02.Models.Robo;
 import cat.itacademy.s05.t02.Models.User;
 import cat.itacademy.s05.t02.Repository.RoboRepository;
@@ -85,16 +86,16 @@ public class RoboServiceImpl implements RoboService {
             int percentage = random.nextInt(5) + 2;
             switch (statIndex) {
                 case 0:
-                    robo.setHealth((int) (robo.getHealth() * (1 + percentage / 100.0)));
+                    robo.setHealth((int) (robo.getOriginalHealth() * (1 + percentage / 100.0)));
                     break;
                 case 1:
-                    robo.setAttack((int) (robo.getAttack() * (1 + percentage / 100.0)));
+                    robo.setAttack((int) (robo.getOriginalAttack() * (1 + percentage / 100.0)));
                     break;
                 case 2:
-                    robo.setDefense((int) (robo.getDefense() * (1 + percentage / 100.0)));
+                    robo.setDefense((int) (robo.getOriginalDefense() * (1 + percentage / 100.0)));
                     break;
                 case 3:
-                    robo.setSpeed((int) (robo.getSpeed() * (1 + percentage / 100.0)));
+                    robo.setSpeed((int) (robo.getOriginalSpeed() * (1 + percentage / 100.0)));
                     break;
             }
         }
@@ -109,8 +110,21 @@ public class RoboServiceImpl implements RoboService {
     public int getUpgradeCost(Long roboId) {
         Robo robo = roboRepository.findById(roboId).orElse(null);
         if (robo == null) {
-            throw new IllegalArgumentException("Robo not found");
+            throw new RoboNotFoundException("Robo not found");
         }
         return (int) (25 * Math.pow(1.04, robo.getLevel() - 1));
+    }
+
+    @Override
+    public void repairRobo(Robo existingRobo) {
+        Robo robo = roboRepository.findById(existingRobo.getId()).orElse(null);
+        if (robo == null) {
+            throw new RoboNotFoundException("Robo not found");
+        }
+        robo.setHealth(robo.getOriginalHealth());
+        robo.setAttack(robo.getOriginalAttack());
+        robo.setDefense(robo.getOriginalDefense());
+        robo.setSpeed(robo.getOriginalSpeed());
+        roboRepository.save(robo);
     }
 }

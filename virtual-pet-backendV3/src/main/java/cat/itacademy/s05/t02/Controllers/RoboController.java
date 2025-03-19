@@ -131,10 +131,11 @@ public class RoboController {
             logger.error("Robo not found: " + id);
             throw new RoboNotFoundException("Robo not found with id: " + id);
         }
-        existingRobo.setHealth(existingRobo.getOriginalHealth());
+        /*existingRobo.setHealth(existingRobo.getOriginalHealth());
         existingRobo.setAttack(existingRobo.getOriginalAttack());
         existingRobo.setDefense(existingRobo.getOriginalDefense());
-        existingRobo.setSpeed(existingRobo.getOriginalSpeed());
+        existingRobo.setSpeed(existingRobo.getOriginalSpeed());*/
+        roboService.repairRobo(existingRobo);
         Robo updatedRobo = roboService.updateRobo(existingRobo);
         RoboDTO roboDTO = new RoboDTO(
                 updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(),
@@ -150,18 +151,13 @@ public class RoboController {
             @ApiResponse(responseCode = "200", description = "All robos repaired successfully")
     })
     public ResponseEntity<String> repairAllRobos() {
-        List<Robo> repairedRobos = roboService.repairAllRobos();
-        List<RoboDTO> roboDTOs = repairedRobos.stream()
-                .map(robo -> new RoboDTO(
-                        robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
-                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed(),
-                        robo.getLevel()))
-                .collect(Collectors.toList());
+        roboService.repairAllRobos();
         return ResponseEntity.ok("All robos repaired successfully");
     }
 
 
     @PostMapping("/{id}/upgrade")
+    @Operation(summary = "Upgrade a robo", description = "Upgrades a robo by increasing its stats")
     public ResponseEntity<String> upgradeRobo(@PathVariable Long id) {
         boolean success = roboService.upgradeRobo(id);
         if (success) {
@@ -173,6 +169,7 @@ public class RoboController {
 
 
     @GetMapping("/{id}/upgrade-cost")
+    @Operation(summary = "Get upgrade cost of a robo", description = "Retrieves the cost of upgrading a robo")
     public ResponseEntity<Integer> getUpgradeCost(@PathVariable Long id) {
         try {
             int cost = roboService.getUpgradeCost(id);
