@@ -11,5 +11,6 @@ public interface RoboService {
     Robo getRoboById(Long id);
     Robo updateRobo(Robo robo);
     List<Robo> repairAllRobos();
-    boolean incrementStat(Long roboId, String stat);
+    boolean upgradeRobo(Long roboId);
+    int getUpgradeCost(Long roboId);
 }

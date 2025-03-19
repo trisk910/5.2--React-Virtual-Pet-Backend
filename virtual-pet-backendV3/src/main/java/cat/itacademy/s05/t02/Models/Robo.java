@@ -19,7 +19,7 @@ public class Robo {
     private int attack;
     private int defense;
     private int speed;
-    //private int happiness;
+    private int level = 1;
     private Long userId;
 
     private int originalHealth;
@@ -31,7 +31,6 @@ public class Robo {
         this.name = name;
         this.type = type;
         setStats(type);
-        //happiness = 100;
         this.userId = userId;
     }
 
@@ -105,13 +104,13 @@ public class Robo {
         this.speed = speed;
     }
 
-    /*public int getHappiness() {
-        return happiness;
+    public int getLevel() {
+        return level;
     }
 
-    public void setHappiness(int happiness) {
-        this.happiness = happiness;
-    }*/
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     private void setStats(RoboType roboType) {
         Random random = new Random();

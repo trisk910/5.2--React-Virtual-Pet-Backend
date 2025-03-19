@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class RoboServiceImpl implements RoboService {
-
-    private static final int STAT_INCREMENT_COST = 25;
 
     @Autowired
     private RoboRepository roboRepository;
@@ -50,6 +49,7 @@ public class RoboServiceImpl implements RoboService {
         return roboRepository.findByUserId(userId);
     }
 
+    @Override
     public List<Robo> repairAllRobos() {
         List<Robo> robos = getAllRobos();
         for (Robo robo : robos) {
@@ -61,35 +61,56 @@ public class RoboServiceImpl implements RoboService {
         }
         return robos;
     }
-
-    public boolean incrementStat(Long roboId, String stat) {
+    @Override
+    public boolean upgradeRobo(Long roboId) {
         Robo robo = roboRepository.findById(roboId).orElse(null);
         if (robo == null) {
             return false;
         }
 
         User user = userRepository.findById(robo.getUserId()).orElse(null);
-        if (user == null || user.getCurrency() < STAT_INCREMENT_COST) {
+        if (user == null) {
             return false;
         }
 
-        switch (stat.toLowerCase()) {
-            case "health":
-                robo.setHealth(robo.getHealth() + 1);
-                break;
-            case "attack":
-                robo.setAttack(robo.getAttack() + 1);
-                break;
-            case "defense":
-                robo.setDefense(robo.getDefense() + 1);
-                break;
-            case "speed":
-                robo.setSpeed(robo.getSpeed() + 1);
-                break;
+        int incrementCost = (int) (25 * Math.pow(1.04, robo.getLevel() - 1));
+        if (user.getCurrency() < incrementCost) {
+            return false;
         }
-        user.setCurrency(user.getCurrency() - STAT_INCREMENT_COST);
+
+        Random random = new Random();
+        int statsToIncrement = random.nextInt(4) + 1;
+        for (int i = 0; i < statsToIncrement; i++) {
+            int statIndex = random.nextInt(4);
+            int percentage = random.nextInt(5) + 2;
+            switch (statIndex) {
+                case 0:
+                    robo.setHealth((int) (robo.getHealth() * (1 + percentage / 100.0)));
+                    break;
+                case 1:
+                    robo.setAttack((int) (robo.getAttack() * (1 + percentage / 100.0)));
+                    break;
+                case 2:
+                    robo.setDefense((int) (robo.getDefense() * (1 + percentage / 100.0)));
+                    break;
+                case 3:
+                    robo.setSpeed((int) (robo.getSpeed() * (1 + percentage / 100.0)));
+                    break;
+            }
+        }
+        user.setCurrency(user.getCurrency() - incrementCost);
+        robo.setLevel(robo.getLevel() + 1);
         roboRepository.save(robo);
         userRepository.save(user);
         return true;
+    }
+
+    @Override
+    public int getUpgradeCost(Long roboId) {
+        Robo robo = roboRepository.findById(roboId).orElse(null);
+        if (robo == null) {
+            throw new IllegalArgumentException("Robo not found");
+        }
+        return (int) (25 * Math.pow(1.04, robo.getLevel() - 1));
     }
 }

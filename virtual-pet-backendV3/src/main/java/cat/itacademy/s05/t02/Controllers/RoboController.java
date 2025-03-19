@@ -40,7 +40,7 @@ public class RoboController {
         Robo savedRobo = roboService.buildRobo(robo);
         RoboDTO roboDTO = new RoboDTO(
                 savedRobo.getId(),savedRobo.getName(),savedRobo.getType(),savedRobo.getUserId(),savedRobo.getHealth(),
-                savedRobo.getAttack(), savedRobo.getDefense(), savedRobo.getSpeed()/*,savedRobo.getHappiness()*/
+                savedRobo.getAttack(), savedRobo.getDefense(), savedRobo.getSpeed(),savedRobo.getLevel()
         );
         return ResponseEntity.ok(roboDTO);
     }
@@ -73,7 +73,7 @@ public class RoboController {
         List<RoboResponseDTO> roboDTOs = robos.stream()
                 .map(robo -> new RoboResponseDTO(
                         robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
-                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()))
+                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed(), robo.getLevel()))
                 .collect(Collectors.toList());
 
         AdminRobosDTO adminRobosDTO = new AdminRobosDTO(roboDTOs.size(), roboDTOs);
@@ -92,7 +92,7 @@ public class RoboController {
         List<RoboResponseDTO> roboDTOs = robos.stream()
                 .map(robo -> new RoboResponseDTO(
                         robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
-                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()))
+                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed(),robo.getLevel()))
                 .collect(Collectors.toList());
         UserRobosDTO userRobosDTO = new UserRobosDTO(id, roboDTOs);
         return ResponseEntity.ok(userRobosDTO);
@@ -114,7 +114,7 @@ public class RoboController {
         Robo updatedRobo = roboService.updateRobo(existingRobo);
         RoboDTO roboDTO = new RoboDTO( updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(),
                 updatedRobo.getUserId(), updatedRobo.getHealth(),  updatedRobo.getAttack(), updatedRobo.getDefense(),
-                updatedRobo.getSpeed()
+                updatedRobo.getSpeed(), updatedRobo.getLevel()
         );
         return ResponseEntity.ok(roboDTO);
     }
@@ -139,7 +139,7 @@ public class RoboController {
         RoboDTO roboDTO = new RoboDTO(
                 updatedRobo.getId(), updatedRobo.getName(), updatedRobo.getType(),
                 updatedRobo.getUserId(), updatedRobo.getHealth(), updatedRobo.getAttack(),
-                updatedRobo.getDefense(), updatedRobo.getSpeed()
+                updatedRobo.getDefense(), updatedRobo.getSpeed(), updatedRobo.getLevel()
         );
         return ResponseEntity.ok(roboDTO);
     }
@@ -154,19 +154,31 @@ public class RoboController {
         List<RoboDTO> roboDTOs = repairedRobos.stream()
                 .map(robo -> new RoboDTO(
                         robo.getId(), robo.getName(), robo.getType(), robo.getUserId(),
-                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed()))
+                        robo.getHealth(), robo.getAttack(), robo.getDefense(), robo.getSpeed(),
+                        robo.getLevel()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok("All robos repaired successfully");
     }
 
 
-    @PostMapping("/{id}/increment-stat")
-    public ResponseEntity<String> incrementStat(@PathVariable Long id, @RequestParam String stat) {
-        boolean success = roboService.incrementStat(id, stat);
+    @PostMapping("/{id}/upgrade")
+    public ResponseEntity<String> upgradeRobo(@PathVariable Long id) {
+        boolean success = roboService.upgradeRobo(id);
         if (success) {
-            return ResponseEntity.ok("Stat incremented successfully");
+            return ResponseEntity.ok("Robo upgraded successfully");
         } else {
-            return ResponseEntity.badRequest().body("Insufficient currency or invalid stat");
+            return ResponseEntity.badRequest().body("Insufficient currency or invalid robo");
+        }
+    }
+
+
+    @GetMapping("/{id}/upgrade-cost")
+    public ResponseEntity<Integer> getUpgradeCost(@PathVariable Long id) {
+        try {
+            int cost = roboService.getUpgradeCost(id);
+            return ResponseEntity.ok(cost);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
         }
     }
 }
