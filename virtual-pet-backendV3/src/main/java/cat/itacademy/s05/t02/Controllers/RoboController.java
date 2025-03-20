@@ -3,7 +3,9 @@ package cat.itacademy.s05.t02.Controllers;
 import cat.itacademy.s05.t02.DTOs.Robo.*;
 import cat.itacademy.s05.t02.Exceptions.RoboNotFoundException;
 import cat.itacademy.s05.t02.Models.Robo;
+import cat.itacademy.s05.t02.Models.User;
 import cat.itacademy.s05.t02.Service.RoboService;
+import cat.itacademy.s05.t02.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,22 +29,29 @@ public class RoboController {
     @Autowired
     private RoboService roboService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/build")
     @Operation(summary = "Build a new robo", description = "Builds a new robo and associates it with a user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Robo created successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input")
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "400", description = "Insufficient Credits")
     })
-    public ResponseEntity<RoboDTO> buildRobo(@RequestBody CreateRoboDTO createRoboDTO) {
-        Robo robo = new Robo(
-                createRoboDTO.getName(), createRoboDTO.getType(), createRoboDTO.getUserId()
-        );
-        Robo savedRobo = roboService.buildRobo(robo);
-        RoboDTO roboDTO = new RoboDTO(
-                savedRobo.getId(),savedRobo.getName(),savedRobo.getType(),savedRobo.getUserId(),savedRobo.getHealth(),
-                savedRobo.getAttack(), savedRobo.getDefense(), savedRobo.getSpeed(),savedRobo.getLevel()
-        );
-        return ResponseEntity.ok(roboDTO);
+    public ResponseEntity<String> buildRobo(@RequestBody CreateRoboDTO createRoboDTO) {
+        try {
+            Robo robo = new Robo(
+                    createRoboDTO.getName(), createRoboDTO.getType(), createRoboDTO.getUserId()
+            );
+            roboService.buildRobo(robo);
+            return ResponseEntity.ok("Robo created successfully");
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().equals("Insufficient Credits")) {
+                return ResponseEntity.badRequest().body("Insufficient Credits");
+            }
+            return ResponseEntity.badRequest().body("Invalid input");
+        }
     }
 
 
@@ -53,13 +62,16 @@ public class RoboController {
             @ApiResponse(responseCode = "404", description = "Robo not found")
     })
     public ResponseEntity<String> destroyRobo(@PathVariable Long id) {
-        Robo existingRobo = roboService.getRoboById(id);
-        if (existingRobo == null) {
-            logger.error("Robo not found: " + id);
-            throw new RoboNotFoundException("Robo not found with id: " + id);
+        try {
+            Robo existingRobo = roboService.getRoboById(id);
+            if (existingRobo == null) {
+                throw new RoboNotFoundException("Robo not found with id: " + id);
+            }
+            roboService.destroyRobo(id);
+            return ResponseEntity.ok("Robo destroyed successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        roboService.destroyRobo(id);
-        return ResponseEntity.ok("Robo deleted successfully");
     }
 
     @GetMapping("/all")

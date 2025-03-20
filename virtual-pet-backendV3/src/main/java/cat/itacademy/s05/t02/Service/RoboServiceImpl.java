@@ -22,14 +22,34 @@ public class RoboServiceImpl implements RoboService {
 
     @Override
     public Robo buildRobo(Robo robo) {
+        User user = userRepository.findById(robo.getUserId()).orElse(null);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+        int requiredCurrency = 100;
+        if (user.getCurrency() < requiredCurrency) {
+            throw new IllegalArgumentException("Insufficient Credits");
+        }
+        user.setCurrency(user.getCurrency() - requiredCurrency);
+        userRepository.save(user);
         return roboRepository.save(robo);
     }
-
     @Override
     public void destroyRobo(Long id) {
+        Robo robo = roboRepository.findById(id).orElse(null);
+        if (robo == null) {
+            throw new IllegalArgumentException("Robo not found");
+        }
+
+        User user = userRepository.findById(robo.getUserId()).orElse(null);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        user.setCurrency(user.getCurrency() + 100);
+        userRepository.save(user);
         roboRepository.deleteById(id);
     }
-
     @Override
     public List<Robo> getAllRobos() {
         return roboRepository.findAll();
