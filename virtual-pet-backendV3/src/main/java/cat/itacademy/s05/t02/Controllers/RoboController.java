@@ -1,6 +1,7 @@
 package cat.itacademy.s05.t02.Controllers;
 
 import cat.itacademy.s05.t02.DTOs.Robo.*;
+import cat.itacademy.s05.t02.Exceptions.InsuficientCreditsException;
 import cat.itacademy.s05.t02.Exceptions.RoboNotFoundException;
 import cat.itacademy.s05.t02.Models.Robo;
 import cat.itacademy.s05.t02.Models.User;
@@ -29,13 +30,10 @@ public class RoboController {
     @Autowired
     private RoboService roboService;
 
-    @Autowired
-    private UserService userService;
-
     @PostMapping("/build")
     @Operation(summary = "Build a new robo", description = "Builds a new robo and associates it with a user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Robo created successfully"),
+            @ApiResponse(responseCode = "200", description = "Robo built successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "400", description = "Insufficient Credits")
     })
@@ -45,11 +43,10 @@ public class RoboController {
                     createRoboDTO.getName(), createRoboDTO.getType(), createRoboDTO.getUserId()
             );
             roboService.buildRobo(robo);
-            return ResponseEntity.ok("Robo created successfully");
+            return ResponseEntity.ok("Robo built successfully");
+        } catch (InsuficientCreditsException e) {
+            return ResponseEntity.badRequest().body("Insufficient Credits");
         } catch (IllegalArgumentException e) {
-            if (e.getMessage().equals("Insufficient Credits")) {
-                return ResponseEntity.badRequest().body("Insufficient Credits");
-            }
             return ResponseEntity.badRequest().body("Invalid input");
         }
     }
@@ -171,6 +168,7 @@ public class RoboController {
     @PostMapping("/{id}/upgrade")
     @Operation(summary = "Upgrade a robo", description = "Upgrades a robo by increasing its stats")
     public ResponseEntity<String> upgradeRobo(@PathVariable Long id) {
+        roboService.repairRobo(roboService.getRoboById(id));
         boolean success = roboService.upgradeRobo(id);
         if (success) {
             return ResponseEntity.ok("Robo upgraded successfully");

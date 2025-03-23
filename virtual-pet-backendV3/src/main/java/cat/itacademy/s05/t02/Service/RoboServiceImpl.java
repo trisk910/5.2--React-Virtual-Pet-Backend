@@ -1,6 +1,8 @@
 package cat.itacademy.s05.t02.Service;
 
+import cat.itacademy.s05.t02.Exceptions.InsuficientCreditsException;
 import cat.itacademy.s05.t02.Exceptions.RoboNotFoundException;
+import cat.itacademy.s05.t02.Exceptions.UserNotFoundException;
 import cat.itacademy.s05.t02.Models.Robo;
 import cat.itacademy.s05.t02.Models.User;
 import cat.itacademy.s05.t02.Repository.RoboRepository;
@@ -13,6 +15,7 @@ import java.util.Random;
 
 @Service
 public class RoboServiceImpl implements RoboService {
+    private final static int requiredCurrency = 100;
 
     @Autowired
     private RoboRepository roboRepository;
@@ -23,13 +26,10 @@ public class RoboServiceImpl implements RoboService {
     @Override
     public Robo buildRobo(Robo robo) {
         User user = userRepository.findById(robo.getUserId()).orElse(null);
-        if (user == null) {
-            throw new IllegalArgumentException("User not found");
-        }
-        int requiredCurrency = 100;
-        if (user.getCurrency() < requiredCurrency) {
-            throw new IllegalArgumentException("Insufficient Credits");
-        }
+        if (user == null)
+            throw new UserNotFoundException("User not found");
+        if (user.getCurrency() < requiredCurrency)
+            throw new InsuficientCreditsException("Insufficient Credits");
         user.setCurrency(user.getCurrency() - requiredCurrency);
         userRepository.save(user);
         return roboRepository.save(robo);
@@ -37,14 +37,12 @@ public class RoboServiceImpl implements RoboService {
     @Override
     public void destroyRobo(Long id) {
         Robo robo = roboRepository.findById(id).orElse(null);
-        if (robo == null) {
+        if (robo == null)
             throw new IllegalArgumentException("Robo not found");
-        }
 
         User user = userRepository.findById(robo.getUserId()).orElse(null);
-        if (user == null) {
+        if (user == null)
             throw new IllegalArgumentException("User not found");
-        }
 
         user.setCurrency(user.getCurrency() + 100);
         userRepository.save(user);
@@ -88,12 +86,10 @@ public class RoboServiceImpl implements RoboService {
         if (robo == null) {
             return false;
         }
-
         User user = userRepository.findById(robo.getUserId()).orElse(null);
         if (user == null) {
             return false;
         }
-
         int incrementCost = (int) (25 * Math.pow(1.04, robo.getLevel() - 1));
         if (user.getCurrency() < incrementCost) {
             return false;
@@ -106,16 +102,17 @@ public class RoboServiceImpl implements RoboService {
             int percentage = random.nextInt(5) + 2;
             switch (statIndex) {
                 case 0:
-                    robo.setHealth((int) (robo.getOriginalHealth() * (1 + percentage / 100.0)));
+                    robo.setOriginalHealth((int) (robo.getOriginalHealth() * (1 + percentage / 100.0)));
+
                     break;
                 case 1:
-                    robo.setAttack((int) (robo.getOriginalAttack() * (1 + percentage / 100.0)));
+                    robo.setOriginalAttack((int) (robo.getOriginalAttack() * (1 + percentage / 100.0)));
                     break;
                 case 2:
-                    robo.setDefense((int) (robo.getOriginalDefense() * (1 + percentage / 100.0)));
+                    robo.setOriginalDefense((int) (robo.getOriginalDefense() * (1 + percentage / 100.0)));
                     break;
                 case 3:
-                    robo.setSpeed((int) (robo.getOriginalSpeed() * (1 + percentage / 100.0)));
+                    robo.setOriginalSpeed((int) (robo.getOriginalSpeed() * (1 + percentage / 100.0)));
                     break;
             }
         }
