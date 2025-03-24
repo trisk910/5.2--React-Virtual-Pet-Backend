@@ -3,8 +3,8 @@
 This is the backend for the Virtual Pets application, inspired by the Medabots universe. Built with **Spring Boot** and **MySQL**, the API allows users to manage and interact with their own virtual creatures.
 
 # Frontend repository:
-
-https://github.com/trisk910/5.2--React-Virtual-Pet-Frontend.git
+> 🔗 **Backend Repository:**  
+>https://github.com/trisk910/5.2--React-Virtual-Pet-Frontend.git
 
 ## 🔧 Tech Stack
 
