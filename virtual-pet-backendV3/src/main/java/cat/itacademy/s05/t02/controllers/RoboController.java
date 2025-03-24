@@ -35,7 +35,6 @@ public class RoboController {
     @Operation(summary = "Build a new robo", description = "Builds a new robo and associates it with a user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Robo built successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "400", description = "Insufficient Credits")
     })
     public ResponseEntity<String> buildRobo(@RequestBody CreateRoboDTO createRoboDTO) {

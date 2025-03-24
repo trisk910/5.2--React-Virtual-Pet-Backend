@@ -5,7 +5,7 @@ public enum CombatPhrases {
     ATTACK_MISS("misses the attack!"),
     WINNER("wins the battle!"),
     COUNTER_ATTACK("counterattacks for %d damage!"),
-    DOUBLE_KO("Double KO! No one wins the battle.");
+    CANTFIGHT("One or both Robos cannot fight due to heavy damage.");
 
     private final String phrase;
 
